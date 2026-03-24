@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>上海牛苏科技有限公司 · 电子名片</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #060c18;
+    --accent-cyan: #00d4ff;
+    --accent-blue: #0066ff;
+    --text-primary: #e8f4ff;
+    --text-secondary: #7bafd4;
+    --text-muted: #3d6080;
+    --border: rgba(0, 212, 255, 0.2);
+    --border-dim: rgba(0, 212, 255, 0.08);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg-deep);
+    min-height: 100vh;
+    display: flex; align-items:center; justify-content:center;
+    font-family: 'Noto Sans SC', sans-serif;
+    overflow: hidden;
+  }
+  body::before {
+    content:''; position:fixed; inset:0;
+    background-image: linear-gradient(rgba(0,212,255,.04) 1px,transparent 1px), linear-gradient(90deg,rgba(0,212,255,.04) 1px,transparent 1px);
+    background-size: 48px 48px;
+    animation: gridDrift 20s linear infinite;
+  }
+  @keyframes gridDrift { 100%{ transform:translateY(48px); } }
+  .glow-orb { position:fixed; border-radius:50%; filter:blur(80px); pointer-events:none; }
+  .glow-orb-1 { width:400px;height:400px; background:radial-gradient(circle,rgba(0,102,255,.18),transparent); top:-100px;left:-100px; animation:floatOrb1 12s ease-in-out infinite alternate; }
+  .glow-orb-2 { width:300px;height:300px; background:radial-gradient(circle,rgba(0,212,255,.12),transparent); bottom:-50px;right:-50px; animation:floatOrb2 9s ease-in-out infinite alternate; }
+  @keyframes floatOrb1 { to{ transform:translate(40px,60px); } }
+  @keyframes floatOrb2 { to{ transform:translate(-30px,-40px); } }
+ 
+  /* CARD */
+  .card {
+    position:relative; width:480px;
+    background: linear-gradient(145deg,#0d1f38,#081428);
+    border:1px solid var(--border); border-radius:4px; overflow:hidden;
+    box-shadow:0 0 0 1px rgba(0,212,255,.05),0 0 60px rgba(0,102,255,.15),0 0 120px rgba(0,0,0,.5),inset 0 0 40px rgba(0,212,255,.02);
+    animation: cardIn .8s cubic-bezier(.16,1,.3,1) both;
+  }
+  @keyframes cardIn { from{opacity:0;transform:translateY(30px) scale(.97)} to{opacity:1;transform:none} }
+  .card::after {
+    content:''; position:absolute; left:0;right:0; height:2px;
+    background:linear-gradient(90deg,transparent,var(--accent-cyan),transparent);
+    opacity:.5; animation:scan 5s ease-in-out infinite; pointer-events:none;
+  }
+  @keyframes scan { 0%{top:0;opacity:0} 10%{opacity:.5} 90%{opacity:.5} 100%{top:100%;opacity:0} }
+  .corner { position:absolute; width:20px;height:20px; z-index:10; }
+  .corner::before,.corner::after { content:''; position:absolute; background:var(--accent-cyan); box-shadow:0 0 6px var(--accent-cyan); }
+  .corner::before { width:100%;height:1.5px;top:0; } .corner::after { width:1.5px;height:100%;top:0; }
+  .corner-tl{top:0;left:0} .corner-tr{top:0;right:0;transform:scaleX(-1)} .corner-bl{bottom:0;left:0;transform:scaleY(-1)} .corner-br{bottom:0;right:0;transform:scale(-1)}
+ 
+  /* Header */
+  .card-header { padding:28px 30px 22px; border-bottom:1px solid var(--border-dim); position:relative; animation:fadeUp .6s .2s both; }
+  .header-badge { display:inline-flex;align-items:center;gap:6px; background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);border-radius:2px;padding:3px 10px;margin-bottom:14px; }
+  .badge-dot { width:6px;height:6px;border-radius:50%;background:var(--accent-cyan);box-shadow:0 0 8px var(--accent-cyan);animation:pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(.8)} }
+  .badge-text { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--accent-cyan);letter-spacing:.15em;text-transform:uppercase; }
+  .logo-mark { position:absolute;top:26px;right:28px; }
+  .hex-svg { width:36px;height:36px;filter:drop-shadow(0 0 8px rgba(0,212,255,.5)); }
+  .hex-inner { font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;fill:var(--accent-cyan); }
+  .data-stream { position:absolute;right:72px;top:32px;display:flex;flex-direction:column;gap:3px;opacity:.25; }
+  .data-stream-line { height:1px;background:linear-gradient(90deg,transparent,var(--accent-cyan));animation:streamIn 2s ease-in-out infinite; }
+  .data-stream-line:nth-child(1){width:30px;animation-delay:0s} .data-stream-line:nth-child(2){width:20px;animation-delay:.3s} .data-stream-line:nth-child(3){width:25px;animation-delay:.6s}
+  @keyframes streamIn { 0%,100%{opacity:.3;transform:scaleX(.6)} 50%{opacity:1;transform:scaleX(1)} }
+  .company-name-cn { font-size:22px;font-weight:700;color:var(--text-primary);letter-spacing:.05em;text-shadow:0 0 30px rgba(0,212,255,.2); }
+  .company-name-en { font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:500;color:var(--text-muted);letter-spacing:.12em;text-transform:uppercase;margin-top:4px; }
+  .tagline { margin-top:14px;padding:10px 14px;background:rgba(0,212,255,.04);border-left:2px solid var(--accent-cyan);border-radius:0 2px 2px 0; }
+  .tagline-text { font-size:11.5px;color:var(--text-secondary);letter-spacing:.06em;line-height:1.7; }
+ 
+  /* Stats */
+  .stats-row { display:flex;border-bottom:1px solid var(--border-dim);animation:fadeUp .6s .3s both; }
+  .stat-item { flex:1;padding:16px 18px;border-right:1px solid var(--border-dim);text-align:center; }
+  .stat-item:last-child{border-right:none}
+  .stat-value { font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:var(--accent-cyan);text-shadow:0 0 20px rgba(0,212,255,.4);letter-spacing:.05em; }
+  .stat-label { font-size:10px;color:var(--text-muted);margin-top:2px;letter-spacing:.08em; }
+ 
+  /* Section */
+  .section { padding:20px 30px;border-bottom:1px solid var(--border-dim);animation:fadeUp .6s .4s both; }
+  .section-title { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px; }
+  .section-title::after { content:'';flex:1;height:1px;background:var(--border-dim); }
+ 
+  /* Products */
+  .products-grid { display:grid;grid-template-columns:1fr 1fr;gap:8px; }
+  .product-card {
+    background:rgba(0,212,255,.03); border:1px solid var(--border-dim);
+    border-radius:3px; padding:12px 14px; position:relative; overflow:hidden;
+    cursor:pointer; transition:all .22s ease; user-select:none;
+  }
+  .product-card:hover { background:rgba(0,212,255,.09);border-color:rgba(0,212,255,.4);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,212,255,.1); }
+  .product-card::before { content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent-cyan),transparent);opacity:0;transition:opacity .22s; }
+  .product-card:hover::before { opacity:.7; }
+  .product-icon { font-size:20px;margin-bottom:7px;display:block; }
+  .product-name { font-size:12px;font-weight:600;color:var(--text-primary);letter-spacing:.04em;line-height:1.4; }
+  .product-sub { font-size:10px;color:var(--text-muted);margin-top:3px;letter-spacing:.03em; }
+  .click-hint { display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--accent-cyan);opacity:.5;letter-spacing:.1em;transition:opacity .22s; }
+  .product-card:hover .click-hint { opacity:1; }
+  .click-hint::before { content:'▶';font-size:7px; }
+  .tagline:hover { background:rgba(0,212,255,.09); border-left-color:var(--accent-cyan); }
+  .tagline:hover .click-hint { opacity:1; }
+ 
+  /* Industries */
+  .industries-section { padding:16px 30px;border-bottom:1px solid var(--border-dim);animation:fadeUp .6s .5s both; }
+  .tags-wrap { display:flex;flex-wrap:wrap;gap:6px;margin-top:12px; }
+  .tag { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text-secondary);background:rgba(0,212,255,.05);border:1px solid var(--border);border-radius:2px;padding:3px 9px;letter-spacing:.08em;transition:all .2s; }
+  .tag:hover { background:rgba(0,212,255,.12);color:var(--accent-cyan);border-color:var(--accent-cyan); }
+ 
+  /* Values */
+  .values-section { padding:16px 30px 18px;border-bottom:1px solid var(--border-dim);animation:fadeUp .6s .55s both; }
+  .value-items { margin-top:12px;display:flex;flex-direction:column;gap:7px; }
+  .value-item { display:flex;align-items:center;gap:10px; }
+  .value-line { width:24px;height:1px;background:linear-gradient(90deg,var(--accent-cyan),transparent);flex-shrink:0; }
+  .value-text { font-size:12px;color:var(--text-secondary);letter-spacing:.05em; }
+ 
+  /* Footer */
+  .card-footer { padding:16px 30px;display:flex;align-items:center;justify-content:space-between;animation:fadeUp .6s .6s both; }
+  .footer-info { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:.08em; }
+  .footer-info span { color:var(--accent-cyan);opacity:.7; }
+  .established { display:flex;align-items:center;gap:8px; }
+  .est-bar { width:30px;height:1px;background:linear-gradient(90deg,var(--border-dim),var(--accent-cyan)); }
+  .est-text { font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;color:var(--text-muted);letter-spacing:.1em; }
+ 
+  @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
+ 
+  /* ── MODAL ── */
+  .modal-overlay {
+    position:fixed;inset:0;z-index:200;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(6,12,24,.88);backdrop-filter:blur(6px);
+    opacity:0;pointer-events:none;transition:opacity .3s ease;
+  }
+  .modal-overlay.active { opacity:1;pointer-events:all; }
+  .modal {
+    position:relative;width:560px;max-height:82vh;
+    background:linear-gradient(160deg,#0c1d36,#07101f);
+    border:1px solid var(--border);border-radius:4px;
+    overflow:hidden;display:flex;flex-direction:column;
+    box-shadow:0 0 80px rgba(0,212,255,.12),0 0 0 1px rgba(0,212,255,.05);
+    transform:translateY(20px) scale(.97);
+    transition:transform .35s cubic-bezier(.16,1,.3,1);
+  }
+  .modal-overlay.active .modal { transform:none; }
+  .modal-corner { position:absolute;width:16px;height:16px;z-index:10; }
+  .modal-corner::before,.modal-corner::after { content:'';position:absolute;background:var(--accent-cyan); }
+  .modal-corner::before { width:100%;height:1px;top:0; } .modal-corner::after { width:1px;height:100%;top:0; }
+  .modal-corner-tl{top:0;left:0} .modal-corner-tr{top:0;right:0;transform:scaleX(-1)} .modal-corner-bl{bottom:0;left:0;transform:scaleY(-1)} .modal-corner-br{bottom:0;right:0;transform:scale(-1)}
+ 
+  .modal-header { padding:22px 26px 18px;border-bottom:1px solid var(--border-dim);flex-shrink:0;position:relative; }
+  .modal-label { font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px; }
+  .modal-title { font-size:18px;font-weight:700;color:var(--text-primary);letter-spacing:.04em;line-height:1.3;text-shadow:0 0 30px rgba(0,212,255,.15); }
+  .modal-sub { font-size:11px;color:var(--text-muted);margin-top:5px;letter-spacing:.04em;line-height:1.6; }
+  .modal-close { position:absolute;top:20px;right:22px;width:28px;height:28px;border-radius:2px;background:rgba(0,212,255,.06);border:1px solid var(--border-dim);color:var(--text-secondary);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:'Share Tech Mono',monospace; }
+  .modal-close:hover { background:rgba(0,212,255,.15);border-color:var(--accent-cyan);color:var(--accent-cyan); }
+ 
+  .modal-body { overflow-y:auto;flex:1;padding:22px 26px 26px;scrollbar-width:thin;scrollbar-color:rgba(0,212,255,.2) transparent; }
+  .modal-body::-webkit-scrollbar { width:4px; }
+  .modal-body::-webkit-scrollbar-thumb { background:rgba(0,212,255,.2);border-radius:2px; }
+ 
+  /* Modal content styles */
+  .content-intro {
+    font-size:12.5px;color:var(--text-secondary);line-height:1.9;letter-spacing:.04em;
+    margin-bottom:22px;padding:14px 16px;
+    background:rgba(0,212,255,.04);border-left:2px solid var(--accent-cyan);border-radius:0 3px 3px 0;
+  }
+  .content-intro strong { color:var(--text-primary);font-weight:500; }
+ 
+  .content-block { margin-bottom:20px; }
+  .content-block-title {
+    font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--accent-cyan);
+    letter-spacing:.18em;text-transform:uppercase;margin-bottom:11px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .content-block-title::after { content:'';flex:1;height:1px;background:var(--border-dim); }
+ 
+  .chip-wrap { display:flex;flex-wrap:wrap;gap:7px; }
+  .chip {
+    font-size:11px;color:var(--text-secondary);background:rgba(0,212,255,.05);
+    border:1px solid var(--border-dim);border-radius:2px;padding:4px 10px;letter-spacing:.03em;transition:all .2s;
+  }
+  .chip:hover { border-color:rgba(0,212,255,.3);color:var(--text-primary); }
+  .chip-accent {
+    font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--accent-cyan);
+    background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);
+    border-radius:2px;padding:4px 11px;letter-spacing:.05em;
+  }
+ 
+  .feature-list { display:flex;flex-direction:column;gap:8px; }
+  .feature-item { display:flex;align-items:flex-start;gap:10px;padding:9px 12px;background:rgba(0,212,255,.03);border-radius:3px;border:1px solid var(--border-dim);transition:border-color .2s; }
+  .feature-item:hover { border-color:rgba(0,212,255,.2); }
+  .feature-dot { width:5px;height:5px;border-radius:50%;background:var(--accent-cyan);flex-shrink:0;margin-top:5px;box-shadow:0 0 6px var(--accent-cyan); }
+  .feature-text { font-size:12px;color:var(--text-secondary);line-height:1.75;letter-spacing:.03em; }
+  .feature-text strong { color:var(--text-primary);font-weight:500; }
+ 
+  .two-col { display:grid;grid-template-columns:1fr 1fr;gap:8px; }
+  .sub-block { padding:12px 14px;background:rgba(0,212,255,.03);border:1px solid var(--border-dim);border-radius:3px; }
+  .sub-block-title { font-size:11.5px;font-weight:600;color:var(--text-primary);letter-spacing:.04em;margin-bottom:9px;padding-bottom:7px;border-bottom:1px solid var(--border-dim); }
+  .sub-block ul { list-style:none; }
+  .sub-block ul li { font-size:11px;color:var(--text-secondary);letter-spacing:.03em;line-height:1.8;padding-left:12px;position:relative; }
+  .sub-block ul li::before { content:'·';position:absolute;left:0;color:var(--accent-cyan); }
+ 
+  .note { margin-top:10px;font-size:11px;color:var(--text-muted);letter-spacing:.04em;font-style:italic; }
+</style>
+</head>
+<body>
+<div class="glow-orb glow-orb-1"></div>
+<div class="glow-orb glow-orb-2"></div>
+ 
+<!-- MAIN CARD -->
+<div class="card">
+  <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div><div class="corner corner-br"></div>
+ 
+  <div class="card-header">
+    <div class="header-badge"><div class="badge-dot"></div><span class="badge-text">Industrial IoT · Smart Monitoring</span></div>
+    <div class="logo-mark">
+      <svg class="hex-svg" viewBox="0 0 40 40" fill="none">
+        <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" stroke="rgba(0,212,255,0.5)" stroke-width="1" fill="rgba(0,212,255,0.06)"/>
+        <polygon points="20,7 31,13.5 31,26.5 20,33 9,26.5 9,13.5" stroke="rgba(0,212,255,0.3)" stroke-width="0.5" fill="none"/>
+        <text x="20" y="24" text-anchor="middle" class="hex-inner">NS</text>
+      </svg>
+    </div>
+    <div class="data-stream"><div class="data-stream-line"></div><div class="data-stream-line"></div><div class="data-stream-line"></div></div>
+    <div class="company-name-cn">上海牛苏科技有限公司</div>
+    <div class="company-name-en">Shanghai Niusu Technology Co., Ltd.</div>
+    <div class="tagline" onclick="openModal('intro')" style="cursor:pointer;transition:all .22s">
+      <div class="tagline-text">国内唯一专注于系列智慧监测技术研发<br>与智慧运维服务的创新型科技企业</div>
+      <div class="click-hint" style="margin-top:8px;display:inline-flex">查看公司简介</div>
+    </div>
+  </div>
+ 
+  <div class="stats-row">
+    <div class="stat-item"><div class="stat-value">2015</div><div class="stat-label">创立年份</div></div>
+    <div class="stat-item"><div class="stat-value">10<span style="font-size:14px;color:var(--text-secondary)">+</span></div><div class="stat-label">行业覆盖</div></div>
+    <div class="stat-item"><div class="stat-value">24/7</div><div class="stat-label">在线监测</div></div>
+  </div>
+ 
+  <div class="section">
+    <div class="section-title">核心产品体系 <span style="font-size:9px;color:rgba(0,212,255,.4);letter-spacing:.05em;font-family:'Share Tech Mono',monospace">点击查看详情</span></div>
+    <div class="products-grid">
+      <div class="product-card" onclick="openModal('dong')">
+        <span class="product-icon">⚙️</span>
+        <div class="product-name">动设备智慧监测系统</div>
+        <div class="product-sub">电机 / 泵 / 风机 / 压缩机</div>
+        <div class="click-hint">查看详情</div>
+      </div>
+      <div class="product-card" onclick="openModal('jing')">
+        <span class="product-icon">🏭</span>
+        <div class="product-name">静设备智慧监测系统</div>
+        <div class="product-sub">压力容器 / 管道 / 储罐</div>
+        <div class="click-hint">查看详情</div>
+      </div>
+      <div class="product-card" onclick="openModal('dian')">
+        <span class="product-icon">⚡</span>
+        <div class="product-name">配电房智慧监测系统</div>
+        <div class="product-sub">高低压配电 / 用电安全</div>
+        <div class="click-hint">查看详情</div>
+      </div>
+      <div class="product-card" onclick="openModal('xiao')">
+        <span class="product-icon">🔥</span>
+        <div class="product-name">消防泵房监测系统</div>
+        <div class="product-sub">设施完整性 / 合规管控</div>
+        <div class="click-hint">查看详情</div>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="industries-section" style="padding:16px 30px;border-bottom:1px solid var(--border-dim);animation:fadeUp .6s .5s both">
+    <div class="section-title">适用场景</div>
+    <div class="tags-wrap">
+      <span class="tag">矿山</span><span class="tag">石化</span><span class="tag">钢铁</span>
+      <span class="tag">电力</span><span class="tag">化工</span><span class="tag">燃气</span>
+      <span class="tag">医药</span><span class="tag">港口</span><span class="tag">市政</span>
+      <span class="tag">城市生命线</span>
+    </div>
+  </div>
+ 
+  <div class="values-section">
+    <div class="section-title">核心价值</div>
+    <div class="value-items">
+      <div class="value-item"><div class="value-line"></div><div class="value-text">让设备更安全</div></div>
+      <div class="value-item"><div class="value-line"></div><div class="value-text">让运行更可靠</div></div>
+      <div class="value-item"><div class="value-line"></div><div class="value-text">让生产更高效</div></div>
+    </div>
+  </div>
+ 
+  <div class="card-footer">
+    <div class="footer-info">
+      <div><span>LOC</span> · 上海市</div>
+      <div style="margin-top:3px"><span>EST</span> · 2015 年 6 月</div>
+    </div>
+    <div class="established"><div class="est-bar"></div><div class="est-text">NIUSU TECH</div></div>
+  </div>
+</div>
+ 
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal">
+    <div class="modal-corner modal-corner-tl"></div><div class="modal-corner modal-corner-tr"></div>
+    <div class="modal-corner modal-corner-bl"></div><div class="modal-corner modal-corner-br"></div>
+    <div class="modal-header">
+      <div class="modal-label" id="modalLabel"></div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-sub" id="modalSub"></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+ 
+<script>
+const products = {
+  intro: {
+    label: 'COMPANY PROFILE · SHANGHAI NIUSU TECHNOLOGY',
+    title: '上海牛苏科技有限公司简介',
+    sub: '创立于 2015 年 6 月 · 国内工业物联网领域资深专家联合组建',
+    body: `
+      <div class="content-intro">
+        上海牛苏科技有限公司创立于 <strong>2015 年 6 月</strong>，由国内工业物联网领域多名资深专家联合组建，是目前国内<strong>唯一一家专注于系列智慧监测技术研发与智慧运维服务</strong>的创新型科技企业，致力于成为国内智慧监测领域<strong>标杆企业</strong>。
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">业务聚焦与服务体系</div>
+        <div class="feature-list">
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">聚焦<strong>动设备、静设备、配电房用电安全、消防泵房设施完整性</strong>四大核心智慧监测业务场景</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">构建 <strong>"咨询 — 研发 — 制造 — 运营"</strong> 全链条一体化服务体系，全面赋能数字化与智能化建设</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">引领<strong>无人化运维变革</strong>，为客户提供从现场感知、边缘计算到云平台分析的<strong>全栈式解决方案</strong></div></div>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">核心产品覆盖场景</div>
+        <div class="chip-wrap">
+          <span class="chip">矿山</span><span class="chip">有色</span><span class="chip">钢铁</span>
+          <span class="chip">石油</span><span class="chip">化工</span><span class="chip">电力</span>
+          <span class="chip">燃气</span><span class="chip">公共建筑</span><span class="chip">市政</span>
+          <span class="chip">城市生命线</span>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">技术优势</div>
+        <div class="feature-list">
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>精准感知</strong>：多元传感技术融合，全维度采集设备运行数据</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>智能预警</strong>：自研 AI 诊断算法，提前识别隐患，有效破解设备检测与安全管理痛点</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>全域管控</strong>：云平台统一管理，助力企业<strong>降本增效、筑牢安全生产防线</strong></div></div>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">近期动态 · 2025 年以来</div>
+        <div class="feature-list">
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">先后与多家国内<strong>知名化工企业</strong>达成深度合作，落地一批<strong>数字化智能化标杆项目</strong></div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">积极支撑<strong>区域中小企业数字化转型试点建设</strong>，推动人工智能与先进制造业深度融合</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">以数智技术赋能产业升级，为<strong>数字化中国建设</strong>提供坚实支撑</div></div>
+        </div>
+      </div>
+    `
+  },
+  dong: {
+    label: 'PRODUCT 01 · ROTATING EQUIPMENT MONITORING',
+    title: '动设备智慧监测系统',
+    sub: '适用设备：电机、减速机、齿轮箱、空气压缩机、离心风机、冷却风机、机泵组合、各类泵体等工业旋转、传动类关键动设备',
+    body: `
+      <div class="content-intro">
+        本系统专为工业旋转、传动类关键动设备量身研发，以<strong>高精度振动传感</strong>、<strong>多点位温度采集</strong>为核心，深度融合边缘计算算力与自研 AI 智能诊断算法，搭建设备全生命周期健康管理模型，实现全天候<strong>预防性在线监测与智能运维</strong>。
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">技术核心</div>
+        <div class="feature-list">
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>高精度振动传感 + 多点位温度采集</strong>，实现设备状态全维度感知</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>边缘计算算力 + 自研 AI 智能诊断算法</strong>，现场实时分析，响应无延迟</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>海量工业故障样本库 + 大数据趋势分析</strong>，精准识别并预判故障模式</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">搭建<strong>设备全生命周期健康管理模型</strong>，持续评估健康状态与劣化趋势</div></div>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">可精准识别的典型故障</div>
+        <div class="chip-wrap">
+          <span class="chip">不平衡与不对中</span>
+          <span class="chip">轴承磨损失效</span>
+          <span class="chip">齿轮断齿劣化</span>
+          <span class="chip">泵体气蚀堵塞</span>
+          <span class="chip">电机绕组过热</span>
+          <span class="chip">轴瓦活塞损坏</span>
+          <span class="chip">部件间隙过大</span>
+          <span class="chip">连接松动脱落</span>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">核心功能</div>
+        <div class="feature-list">
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>多级预警推送</strong>：按严重程度分级推送，及时通知运维人员</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>故障溯源定位</strong>：精准识别故障类型、部位与成因，辅助检修决策</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>健康状态评估</strong>：持续评分，掌握每台设备当前健康水平</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">大幅<strong>减少非计划停机时长</strong>，降低运维检修成本，延长设备服役周期</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">助力企业实现动设备<strong>智能化、无人化运维</strong></div></div>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">适用行业场景</div>
+        <div class="chip-wrap">
+          <span class="chip-accent">煤炭</span><span class="chip-accent">石化</span>
+          <span class="chip-accent">钢铁</span><span class="chip-accent">水泥</span>
+          <span class="chip-accent">电力</span><span class="chip-accent">港口</span>
+          <span class="chip-accent">医药</span><span class="chip-accent">食品</span>
+          <span class="chip-accent">化工园区</span>
+        </div>
+      </div>
+    `
+  },
+ 
+  jing: {
+    label: 'PRODUCT 02 · STATIC EQUIPMENT MONITORING',
+    title: '静设备智慧监测系统（含特种设备）',
+    sub: '适用设备：导热油压力管道、压力容器、各类储罐、换热器、反应釜、塔器、锅炉等工业静置类关键设备及特种设备',
+    body: `
+      <div class="content-intro">
+        本系统整合<strong>分布式光纤传感、红外热成像、激光遥测、声学监测、多维度参数传感器</strong>等多元感知技术，搭配边缘计算与 AI 多源数据融合分析算法，攻克高温、高压、易燃易爆等严苛工况下的监测难题，实现<strong>全生命周期非接触式、不间断预防性在线监测</strong>，严格契合特种设备安全监管要求。
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">多元感知技术体系</div>
+        <div class="chip-wrap">
+          <span class="chip">分布式光纤传感</span>
+          <span class="chip">红外热成像</span>
+          <span class="chip">激光遥测</span>
+          <span class="chip">声学监测</span>
+          <span class="chip">多维度参数传感器</span>
+          <span class="chip">AI 多源数据融合</span>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">重点监测对象与隐患</div>
+        <div class="two-col">
+          <div class="sub-block">
+            <div class="sub-block-title">🔩 压力管道</div>
+            <ul>
+              <li>管壁腐蚀减薄</li>
+              <li>焊缝开裂</li>
+              <li>弯头破损</li>
+              <li>介质泄漏</li>
+              <li>倾角位移</li>
+              <li>超压运行</li>
+              <li>密封失效</li>
+            </ul>
+          </div>
+          <div class="sub-block">
+            <div class="sub-block-title">🏺 压力容器</div>
+            <ul>
+              <li>内壁腐蚀</li>
+              <li>应力异常</li>
+              <li>壁厚衰减</li>
+              <li>密封面渗漏</li>
+              <li>接口松动</li>
+              <li>超温超压</li>
+              <li>安全附件失灵</li>
+            </ul>
+          </div>
+        </div>
+        <div style="margin-top:8px" class="sub-block">
+          <div class="sub-block-title">🛢️ 储罐 / 换热器等静设备</div>
+          <ul>
+            <li>跑冒滴漏、局部腐蚀、部件老化等问题全面覆盖</li>
+          </ul>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">系统核心能力</div>
+        <div class="feature-list">
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>隐患精准定位</strong>：多点位传感数据融合，快速锁定异常部位</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>风险自动分级</strong>：AI 评估模型自动输出风险等级，辅助决策</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>趋势预判推演</strong>：提前预测劣化趋势，争取处置窗口期</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>隐患闭环管理</strong>：从发现、预警、处置到验收全流程闭环追踪</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>合规台账生成</strong>：自动生成特种设备安全监管合规文档，减少人工负担</div></div>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">适用行业场景</div>
+        <div class="chip-wrap">
+          <span class="chip-accent">煤炭</span><span class="chip-accent">石化</span>
+          <span class="chip-accent">钢铁</span><span class="chip-accent">水泥</span>
+          <span class="chip-accent">电力</span><span class="chip-accent">港口</span>
+          <span class="chip-accent">医药</span><span class="chip-accent">食品</span>
+          <span class="chip-accent">化工园区</span>
+        </div>
+        <p class="note">★ 尤其适配高温、高压、易燃易爆、有毒有害等复杂严苛工况</p>
+      </div>
+    `
+  },
+ 
+  dian: {
+    label: 'PRODUCT 03 · POWER DISTRIBUTION MONITORING',
+    title: '配电房智慧监测系统',
+    sub: '适用场景：各类高低压配电房、箱式变电站、临时配电设施、电缆等，支持不同规模配电房灵活部署与存量改造',
+    body: `
+      <div class="content-intro">
+        本系统采用<strong>模块化集成、即插即用</strong>设计，支持灵活扩容与存量设备改造，以<strong>多维度用电状态感知、环境安防监测</strong>为核心，搭配无线远程传输与数据加密存储技术，融合 AI 智能分析模型，实现配电房<strong>全生命周期预防性在线监测</strong>，兼顾监测精准度、数据安全性与运维便捷性。
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">用电安全监测</div>
+        <div class="chip-wrap">
+          <span class="chip">线路过载短路</span>
+          <span class="chip">漏电电弧</span>
+          <span class="chip">接触不良发热</span>
+          <span class="chip">局部放电</span>
+          <span class="chip">绝缘老化</span>
+          <span class="chip">接地电阻异常</span>
+          <span class="chip">电缆接头过热</span>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">电缆高发故障监测</div>
+        <div class="chip-wrap">
+          <span class="chip">绝缘击穿</span>
+          <span class="chip">过载过热</span>
+          <span class="chip">断线断芯</span>
+          <span class="chip">受潮进水</span>
+          <span class="chip">外皮破损腐蚀</span>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">环境与安防监测</div>
+        <div class="chip-wrap">
+          <span class="chip">配电柜凝露</span>
+          <span class="chip">温湿度超标</span>
+          <span class="chip">积水浸水</span>
+          <span class="chip">烟雾火情</span>
+          <span class="chip">门禁异常</span>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">系统核心功能</div>
+        <div class="feature-list">
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>用电数据时序分析 + 故障预判模型</strong>，依托 AI 提前精准预警</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>远程联动控制</strong>：异常时自动触发保护动作，降低事故扩散风险</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>分级报警推送</strong>：按严重程度分级推送至相关责任人</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>运维工单生成</strong>：自动派单，优化运维响应流程，减少人工干预</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">大幅减少<strong>非计划停电、电气火灾</strong>等安全事故，削减人工巡检成本</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">实现配电运维<strong>智能化、无人化</strong>，满足现代化安全用电与精益化管理需求</div></div>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">适用行业场景</div>
+        <div class="chip-wrap">
+          <span class="chip-accent">工业企业</span><span class="chip-accent">产业园区</span>
+          <span class="chip-accent">市政设施</span><span class="chip-accent">商业综合体</span>
+          <span class="chip-accent">医院</span><span class="chip-accent">学校</span>
+          <span class="chip-accent">轨道交通</span>
+        </div>
+      </div>
+    `
+  },
+ 
+  xiao: {
+    label: 'PRODUCT 04 · FIRE PUMP ROOM MONITORING',
+    title: '消防泵房设施完整性智慧监测系统',
+    sub: '聚焦消防设施完整性与待命状态管控，破解消防设施"带病运行、监管缺位"痛点，保障消防系统时刻处于合规备战状态',
+    body: `
+      <div class="content-intro">
+        本系统以<strong>物联网智能感知、边缘计算、AI 智能分析</strong>为技术核心，实现消防泵房<strong>全生命周期全天候预防性在线监测</strong>，通过多维度数据融合与趋势预判分析，最大限度降低消防设施失效风险，筑牢消防安全底线，同时兼顾<strong>降本增效与消防安全双重目标</strong>。
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">核心隐患监测</div>
+        <div class="chip-wrap">
+          <span class="chip">水泵启停异常</span>
+          <span class="chip">主备泵切换失灵</span>
+          <span class="chip">管网压力不稳</span>
+          <span class="chip">液位异常波动</span>
+          <span class="chip">管路泄漏</span>
+          <span class="chip">阀门开关故障</span>
+          <span class="chip">电机过载过热</span>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">易忽视问题全覆盖</div>
+        <div class="chip-wrap">
+          <span class="chip">管道腐蚀</span>
+          <span class="chip">阀门密封失效</span>
+          <span class="chip">仪表失灵</span>
+          <span class="chip">供电异常</span>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">系统核心功能</div>
+        <div class="feature-list">
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>多维度数据融合 + 趋势预判分析</strong>：提前精准预警，争取处置时间</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>报警联动</strong>：异常状态自动触发联动响应，防止事态扩大</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>状态可视化</strong>：泵房所有设备运行状态实时大屏展示，一目了然</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>台账管理</strong>：设施档案、维保记录、巡检日志全面数字化</div></div>
+          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>合规自查</strong>：自动比对消防法规要求，生成合规检查报告，减轻监管压力</div></div>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">适用场景</div>
+        <div class="chip-wrap">
+          <span class="chip-accent">工业园区</span><span class="chip-accent">住宅小区</span>
+          <span class="chip-accent">商业综合体</span><span class="chip-accent">学校</span>
+          <span class="chip-accent">医院</span><span class="chip-accent">化工企业</span>
+          <span class="chip-accent">各类公共建筑</span>
+        </div>
+        <p class="note">★ 适配不同规模、不同布局的消防泵房设施，满足常态化管控与合规化运维全场景需求</p>
+      </div>
+    `
+  }
+};
+ 
+function openModal(key) {
+  const p = products[key];
+  document.getElementById('modalLabel').textContent = p.label;
+  document.getElementById('modalTitle').textContent = p.title;
+  document.getElementById('modalSub').textContent = p.sub;
+  document.getElementById('modalBody').innerHTML = p.body;
+  document.getElementById('modalBody').scrollTop = 0;
+  document.getElementById('modalOverlay').classList.add('active');
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
