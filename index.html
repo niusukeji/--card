@@ -2,210 +2,314 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>上海牛苏科技有限公司 · 电子名片</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-deep: #060c18;
-    --accent-cyan: #00d4ff;
-    --accent-blue: #0066ff;
-    --text-primary: #e8f4ff;
-    --text-secondary: #7bafd4;
-    --text-muted: #3d6080;
-    --border: rgba(0, 212, 255, 0.2);
-    --border-dim: rgba(0, 212, 255, 0.08);
+    --bg-deep: #020611; /* 更深邃的背景底色 */
+    --accent-cyan: #00f0ff; /* 更明亮的霓虹青色 */
+    --accent-blue: #0044ff; /* 深邃的科技蓝 */
+    --text-primary: #ffffff;
+    --text-secondary: #8ab4f8;
+    --text-muted: #4a6c8c;
+    --border: rgba(0, 240, 255, 0.25);
+    --border-dim: rgba(0, 240, 255, 0.1);
+    --glass-bg: rgba(6, 15, 30, 0.6); /* 玻璃化背景 */
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+  
   body {
     background: var(--bg-deep);
     min-height: 100vh;
-    display: flex; align-items:center; justify-content:center;
+    display: flex; 
+    align-items: flex-start; 
+    justify-content: center;
     font-family: 'Noto Sans SC', sans-serif;
-    overflow: hidden;
+    overflow-x: hidden; 
+    overflow-y: auto;   
+    padding: 30px 15px; /* 增加整体外边距 */
   }
+
+  /* 更有纵深感的背景网格与光晕 */
   body::before {
     content:''; position:fixed; inset:0;
-    background-image: linear-gradient(rgba(0,212,255,.04) 1px,transparent 1px), linear-gradient(90deg,rgba(0,212,255,.04) 1px,transparent 1px);
-    background-size: 48px 48px;
-    animation: gridDrift 20s linear infinite;
+    background-image: 
+      linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px), 
+      linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: center center;
+    animation: gridDrift 25s linear infinite;
+    z-index: -2;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
   }
-  @keyframes gridDrift { 100%{ transform:translateY(48px); } }
-  .glow-orb { position:fixed; border-radius:50%; filter:blur(80px); pointer-events:none; }
-  .glow-orb-1 { width:400px;height:400px; background:radial-gradient(circle,rgba(0,102,255,.18),transparent); top:-100px;left:-100px; animation:floatOrb1 12s ease-in-out infinite alternate; }
-  .glow-orb-2 { width:300px;height:300px; background:radial-gradient(circle,rgba(0,212,255,.12),transparent); bottom:-50px;right:-50px; animation:floatOrb2 9s ease-in-out infinite alternate; }
-  @keyframes floatOrb1 { to{ transform:translate(40px,60px); } }
-  @keyframes floatOrb2 { to{ transform:translate(-30px,-40px); } }
+  body::after {
+    content:''; position:fixed; inset:0;
+    background: radial-gradient(circle at 50% 0%, rgba(0, 68, 255, 0.1) 0%, transparent 60%);
+    z-index: -2;
+  }
+  @keyframes gridDrift { 100%{ transform:translateY(50px); } }
+  
+  .glow-orb { position:fixed; border-radius:50%; filter:blur(90px); pointer-events:none; z-index: -1; }
+  .glow-orb-1 { width:500px;height:500px; background:radial-gradient(circle,rgba(0,68,255,.2),transparent); top:-150px;left:-150px; animation:floatOrb1 15s ease-in-out infinite alternate; }
+  .glow-orb-2 { width:400px;height:400px; background:radial-gradient(circle,rgba(0,240,255,.15),transparent); bottom:-100px;right:-100px; animation:floatOrb2 12s ease-in-out infinite alternate; }
+  @keyframes floatOrb1 { to{ transform:translate(50px,80px); } }
+  @keyframes floatOrb2 { to{ transform:translate(-40px,-60px); } }
  
-  /* CARD */
+  /* ── MAIN CARD (玻璃拟物化 & 更大气) ── */
   .card {
-    position:relative; width:480px;
-    background: linear-gradient(145deg,#0d1f38,#081428);
-    border:1px solid var(--border); border-radius:4px; overflow:hidden;
-    box-shadow:0 0 0 1px rgba(0,212,255,.05),0 0 60px rgba(0,102,255,.15),0 0 120px rgba(0,0,0,.5),inset 0 0 40px rgba(0,212,255,.02);
-    animation: cardIn .8s cubic-bezier(.16,1,.3,1) both;
+    position:relative; 
+    width: 100%; 
+    max-width: 520px; /* 【更大气】宽度从480提升至520 */
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border); 
+    border-radius: 6px; 
+    overflow: hidden;
+    box-shadow: 
+      0 0 0 1px rgba(0, 240, 255, 0.1),
+      0 10px 40px rgba(0, 0, 0, 0.6),
+      0 0 80px rgba(0, 68, 255, 0.2),
+      inset 0 0 40px rgba(0, 240, 255, 0.03);
+    animation: cardIn 1s cubic-bezier(.16,1,.3,1) both;
+    margin: auto 0;
   }
-  @keyframes cardIn { from{opacity:0;transform:translateY(30px) scale(.97)} to{opacity:1;transform:none} }
+  @keyframes cardIn { from{opacity:0;transform:translateY(40px) scale(.95)} to{opacity:1;transform:none} }
+  
+  /* 优化全息扫描线 */
   .card::after {
-    content:''; position:absolute; left:0;right:0; height:2px;
+    content:''; position:absolute; left:0;right:0; height:3px;
     background:linear-gradient(90deg,transparent,var(--accent-cyan),transparent);
-    opacity:.5; animation:scan 5s ease-in-out infinite; pointer-events:none;
+    opacity:.6; animation:scan 4s cubic-bezier(0.4, 0, 0.2, 1) infinite; pointer-events:none;
+    box-shadow: 0 0 10px var(--accent-cyan);
   }
-  @keyframes scan { 0%{top:0;opacity:0} 10%{opacity:.5} 90%{opacity:.5} 100%{top:100%;opacity:0} }
-  .corner { position:absolute; width:20px;height:20px; z-index:10; }
-  .corner::before,.corner::after { content:''; position:absolute; background:var(--accent-cyan); box-shadow:0 0 6px var(--accent-cyan); }
-  .corner::before { width:100%;height:1.5px;top:0; } .corner::after { width:1.5px;height:100%;top:0; }
+  @keyframes scan { 0%{top:0;opacity:0} 10%{opacity:.6} 90%{opacity:.6} 100%{top:100%;opacity:0} }
+  
+  /* 更硬核的边角 HUD 框 */
+  .corner { position:absolute; width:24px;height:24px; z-index:10; }
+  .corner::before,.corner::after { content:''; position:absolute; background:var(--accent-cyan); box-shadow:0 0 8px var(--accent-cyan); }
+  .corner::before { width:100%;height:2px;top:0; } .corner::after { width:2px;height:100%;top:0; }
   .corner-tl{top:0;left:0} .corner-tr{top:0;right:0;transform:scaleX(-1)} .corner-bl{bottom:0;left:0;transform:scaleY(-1)} .corner-br{bottom:0;right:0;transform:scale(-1)}
  
-  /* Header */
-  .card-header { padding:28px 30px 22px; border-bottom:1px solid var(--border-dim); position:relative; animation:fadeUp .6s .2s both; }
-  .header-badge { display:inline-flex;align-items:center;gap:6px; background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);border-radius:2px;padding:3px 10px;margin-bottom:14px; }
-  .badge-dot { width:6px;height:6px;border-radius:50%;background:var(--accent-cyan);box-shadow:0 0 8px var(--accent-cyan);animation:pulse 2s ease-in-out infinite; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(.8)} }
-  .badge-text { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--accent-cyan);letter-spacing:.15em;text-transform:uppercase; }
-  .logo-mark { position:absolute;top:26px;right:28px; }
-  .hex-svg { width:36px;height:36px;filter:drop-shadow(0 0 8px rgba(0,212,255,.5)); }
-  .hex-inner { font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;fill:var(--accent-cyan); }
-  .data-stream { position:absolute;right:72px;top:32px;display:flex;flex-direction:column;gap:3px;opacity:.25; }
-  .data-stream-line { height:1px;background:linear-gradient(90deg,transparent,var(--accent-cyan));animation:streamIn 2s ease-in-out infinite; }
-  .data-stream-line:nth-child(1){width:30px;animation-delay:0s} .data-stream-line:nth-child(2){width:20px;animation-delay:.3s} .data-stream-line:nth-child(3){width:25px;animation-delay:.6s}
+  /* Header 优化间距 */
+  .card-header { padding:36px 32px 28px; border-bottom:1px solid var(--border-dim); position:relative; animation:fadeUp .6s .2s both; }
+  .header-badge { display:inline-flex;align-items:center;gap:8px; background:rgba(0,240,255,.08);border:1px solid rgba(0,240,255,.3);border-radius:3px;padding:4px 12px;margin-bottom:18px; box-shadow: 0 0 15px rgba(0,240,255,.1); }
+  .badge-dot { width:6px;height:6px;border-radius:50%;background:var(--accent-cyan);box-shadow:0 0 10px var(--accent-cyan);animation:pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.7)} }
+  .badge-text { font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--accent-cyan);letter-spacing:.15em;text-transform:uppercase; font-weight: 600; }
+  
+  .logo-mark { position:absolute;top:32px;right:32px; animation:spinLogo 20s linear infinite; }
+  @keyframes spinLogo { 100% { transform: rotate(360deg); } }
+  .hex-svg { width:42px;height:42px;filter:drop-shadow(0 0 10px rgba(0,240,255,.6)); }
+  .hex-inner { font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;fill:var(--accent-cyan); animation: counterSpinLogo 20s linear infinite; transform-origin: center;}
+  @keyframes counterSpinLogo { 100% { transform: rotate(-360deg); } }
+
+  .data-stream { position:absolute;right:85px;top:40px;display:flex;flex-direction:column;gap:4px;opacity:.35; }
+  .data-stream-line { height:1.5px;background:linear-gradient(90deg,transparent,var(--accent-cyan));animation:streamIn 2s ease-in-out infinite; }
+  .data-stream-line:nth-child(1){width:36px;animation-delay:0s} .data-stream-line:nth-child(2){width:24px;animation-delay:.3s} .data-stream-line:nth-child(3){width:30px;animation-delay:.6s}
   @keyframes streamIn { 0%,100%{opacity:.3;transform:scaleX(.6)} 50%{opacity:1;transform:scaleX(1)} }
-  .company-name-cn { font-size:22px;font-weight:700;color:var(--text-primary);letter-spacing:.05em;text-shadow:0 0 30px rgba(0,212,255,.2); }
-  .company-name-en { font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:500;color:var(--text-muted);letter-spacing:.12em;text-transform:uppercase;margin-top:4px; }
-  .tagline { margin-top:14px;padding:10px 14px;background:rgba(0,212,255,.04);border-left:2px solid var(--accent-cyan);border-radius:0 2px 2px 0; }
-  .tagline-text { font-size:11.5px;color:var(--text-secondary);letter-spacing:.06em;line-height:1.7; }
- 
-  /* Stats */
-  .stats-row { display:flex;border-bottom:1px solid var(--border-dim);animation:fadeUp .6s .3s both; }
-  .stat-item { flex:1;padding:16px 18px;border-right:1px solid var(--border-dim);text-align:center; }
-  .stat-item:last-child{border-right:none}
-  .stat-value { font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:var(--accent-cyan);text-shadow:0 0 20px rgba(0,212,255,.4);letter-spacing:.05em; }
-  .stat-label { font-size:10px;color:var(--text-muted);margin-top:2px;letter-spacing:.08em; }
- 
-  /* Section */
-  .section { padding:20px 30px;border-bottom:1px solid var(--border-dim);animation:fadeUp .6s .4s both; }
-  .section-title { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px; }
-  .section-title::after { content:'';flex:1;height:1px;background:var(--border-dim); }
- 
-  /* Products */
-  .products-grid { display:grid;grid-template-columns:1fr 1fr;gap:8px; }
-  .product-card {
-    background:rgba(0,212,255,.03); border:1px solid var(--border-dim);
-    border-radius:3px; padding:12px 14px; position:relative; overflow:hidden;
-    cursor:pointer; transition:all .22s ease; user-select:none;
+  
+  .company-name-cn { font-size:24px;font-weight:700;color:var(--text-primary);letter-spacing:.08em;text-shadow:0 0 20px rgba(0,240,255,.4), 0 0 40px rgba(0,68,255,.4); }
+  .company-name-en { font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:600;color:var(--text-muted);letter-spacing:.15em;text-transform:uppercase;margin-top:6px; }
+  @media (min-width: 380px) {
+    .company-name-cn { font-size:26px; }
+    .company-name-en { font-size:12px; }
   }
-  .product-card:hover { background:rgba(0,212,255,.09);border-color:rgba(0,212,255,.4);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,212,255,.1); }
-  .product-card::before { content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent-cyan),transparent);opacity:0;transition:opacity .22s; }
-  .product-card:hover::before { opacity:.7; }
-  .product-icon { font-size:20px;margin-bottom:7px;display:block; }
-  .product-name { font-size:12px;font-weight:600;color:var(--text-primary);letter-spacing:.04em;line-height:1.4; }
-  .product-sub { font-size:10px;color:var(--text-muted);margin-top:3px;letter-spacing:.03em; }
-  .click-hint { display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--accent-cyan);opacity:.5;letter-spacing:.1em;transition:opacity .22s; }
-  .product-card:hover .click-hint { opacity:1; }
-  .click-hint::before { content:'▶';font-size:7px; }
-  .tagline:hover { background:rgba(0,212,255,.09); border-left-color:var(--accent-cyan); }
-  .tagline:hover .click-hint { opacity:1; }
+
+  .tagline { margin-top:18px;padding:14px 18px;background:rgba(0,240,255,.03);border-left:3px solid var(--accent-cyan);border-radius:0 4px 4px 0; cursor:pointer; transition:all .3s ease; box-shadow: inset 0 0 20px rgba(0,240,255,0); }
+  .tagline:hover { background:rgba(0,240,255,.08); border-left-color:#fff; box-shadow: inset 0 0 20px rgba(0,240,255,.05); }
+  .tagline-text { font-size:13px;color:var(--text-secondary);letter-spacing:.08em;line-height:1.8; }
+  .click-hint { display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--accent-cyan);opacity:.6;letter-spacing:.15em;transition:all .3s ease; }
+  .tagline:hover .click-hint { opacity:1; color: #fff; text-shadow: 0 0 10px var(--accent-cyan); }
+  .click-hint::before { content:'►';font-size:9px; }
  
-  /* Industries */
-  .industries-section { padding:16px 30px;border-bottom:1px solid var(--border-dim);animation:fadeUp .6s .5s both; }
-  .tags-wrap { display:flex;flex-wrap:wrap;gap:6px;margin-top:12px; }
-  .tag { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text-secondary);background:rgba(0,212,255,.05);border:1px solid var(--border);border-radius:2px;padding:3px 9px;letter-spacing:.08em;transition:all .2s; }
-  .tag:hover { background:rgba(0,212,255,.12);color:var(--accent-cyan);border-color:var(--accent-cyan); }
+  /* Stats (更大气的数据展示) */
+  .stats-row { display:flex;border-bottom:1px solid var(--border-dim);animation:fadeUp .6s .3s both; background: rgba(0,0,0,0.2); }
+  .stat-item { flex:1;padding:20px 10px;border-right:1px solid var(--border-dim);text-align:center; position: relative; overflow: hidden;}
+  .stat-item:last-child{border-right:none}
+  .stat-item::before { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; height: 2px; background: var(--accent-cyan); transition: width 0.3s ease; box-shadow: 0 0 10px var(--accent-cyan); }
+  .stat-item:hover::before { width: 50%; }
+  .stat-value { font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--text-primary);text-shadow:0 0 15px rgba(0,240,255,.5);letter-spacing:.05em; }
+  .stat-label { font-size:11px;color:var(--text-muted);margin-top:6px;letter-spacing:.1em; text-transform: uppercase;}
  
-  /* Values */
-  .values-section { padding:16px 30px 18px;border-bottom:1px solid var(--border-dim);animation:fadeUp .6s .55s both; }
-  .value-items { margin-top:12px;display:flex;flex-direction:column;gap:7px; }
-  .value-item { display:flex;align-items:center;gap:10px; }
-  .value-line { width:24px;height:1px;background:linear-gradient(90deg,var(--accent-cyan),transparent);flex-shrink:0; }
-  .value-text { font-size:12px;color:var(--text-secondary);letter-spacing:.05em; }
+  /* Sections */
+  .section, .industries-section, .values-section { padding:28px 32px;border-bottom:1px solid var(--border-dim); }
+  .section { animation:fadeUp .6s .4s both; }
+  .industries-section { animation:fadeUp .6s .5s both; }
+  .values-section { animation:fadeUp .6s .55s both; }
+  
+  .section-title { font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--accent-cyan);letter-spacing:.25em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:12px; opacity: 0.9; }
+  .section-title::after { content:'';flex:1;height:1px;background:linear-gradient(90deg, var(--border-dim), transparent); }
+ 
+  /* Products (全息面板质感) */
+  .products-grid { display:grid;grid-template-columns:1fr 1fr;gap:14px; }
+  .product-card {
+    background: linear-gradient(180deg, rgba(0,240,255,0.02) 0%, rgba(0,240,255,0.06) 100%);
+    border: 1px solid var(--border-dim);
+    border-top: 1px solid rgba(0,240,255,0.25);
+    border-radius: 4px; padding: 18px 16px; position: relative; overflow: hidden;
+    cursor: pointer; transition: all .3s cubic-bezier(0.4, 0, 0.2, 1); user-select: none;
+    box-shadow: inset 0 0 20px rgba(0,240,255,0);
+  }
+  .product-card:active { transform:scale(0.97); }
+  .product-card:hover { 
+    background: linear-gradient(180deg, rgba(0,240,255,0.05) 0%, rgba(0,240,255,0.12) 100%);
+    border-color: rgba(0,240,255,0.5); 
+    transform: translateY(-4px); 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 20px rgba(0,240,255,0.15), inset 0 0 20px rgba(0,240,255,0.05); 
+  }
+  .product-icon { font-size:24px;margin-bottom:10px;display:inline-block; filter: drop-shadow(0 0 8px rgba(0,240,255,0.4)); transition: transform 0.3s ease; }
+  .product-card:hover .product-icon { transform: scale(1.1) translateY(-2px); }
+  .product-name { font-size:14px;font-weight:600;color:var(--text-primary);letter-spacing:.05em;line-height:1.4; text-shadow: 0 0 10px rgba(0,240,255,0.2);}
+  .product-sub { font-size:11px;color:var(--text-secondary);margin-top:6px;letter-spacing:.04em; opacity: 0.8; }
+  .product-card:hover .click-hint { opacity:1; color: var(--accent-cyan); }
+ 
+  /* Tags & Values */
+  .tags-wrap { display:flex;flex-wrap:wrap;gap:10px; }
+  .tag { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text-secondary);background:rgba(0,0,0,0.3);border:1px solid rgba(0,240,255,0.15);border-radius:2px;padding:6px 12px;letter-spacing:.1em;transition:all .3s; }
+  .tag:hover { background:rgba(0,240,255,.15);color:#fff;border-color:var(--accent-cyan); box-shadow: 0 0 15px rgba(0,240,255,.2); transform: translateY(-2px); }
+ 
+  .value-items { display:flex;flex-direction:column;gap:12px; }
+  .value-item { display:flex;align-items:center;gap:12px; }
+  .value-line { width:30px;height:2px;background:linear-gradient(90deg,var(--accent-cyan),transparent);flex-shrink:0; box-shadow: 0 0 8px var(--accent-cyan); }
+  .value-text { font-size:14px;color:var(--text-secondary);letter-spacing:.08em; font-weight: 500;}
+
+  /* 联系方式 (更强烈的科技按钮质感) */
+  .contact-section { animation:fadeUp .6s .6s both; border-bottom: none; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .contact-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 14px 12px; 
+    background: rgba(0,240,255,.03); 
+    border: 1px solid var(--border-dim);
+    border-radius: 4px; color: var(--text-primary); text-decoration: none;
+    font-size: 13px; font-weight: 500; letter-spacing: 0.05em;
+    transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative; overflow: hidden;
+  }
+  .contact-btn::before {
+    content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: all 0.5s ease;
+  }
+  .contact-btn:hover::before { left: 100%; }
+  .contact-btn:hover, .contact-btn:active { 
+    background: linear-gradient(135deg, rgba(0,240,255,.1) 0%, rgba(0,68,255,.2) 100%); 
+    border-color: var(--accent-cyan); 
+    box-shadow: 0 0 20px rgba(0,240,255,.15);
+    transform: translateY(-2px);
+  }
+  .contact-icon { font-size: 16px; filter: drop-shadow(0 0 4px rgba(0,240,255,0.5));}
  
   /* Footer */
-  .card-footer { padding:16px 30px;display:flex;align-items:center;justify-content:space-between;animation:fadeUp .6s .6s both; }
-  .footer-info { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:.08em; }
-  .footer-info span { color:var(--accent-cyan);opacity:.7; }
-  .established { display:flex;align-items:center;gap:8px; }
-  .est-bar { width:30px;height:1px;background:linear-gradient(90deg,var(--border-dim),var(--accent-cyan)); }
-  .est-text { font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;color:var(--text-muted);letter-spacing:.1em; }
+  .card-footer { padding:24px 32px;display:flex;align-items:center;justify-content:space-between;animation:fadeUp .6s .7s both; border-top: 1px solid var(--border-dim); background: rgba(0,0,0,0.2); }
+  .footer-info { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text-muted);letter-spacing:.12em; line-height: 1.6;}
+  .footer-info span { color:var(--accent-cyan);opacity:.8; font-weight: bold;}
+  .established { display:flex;align-items:center;gap:10px; }
+  .est-bar { width:40px;height:2px;background:linear-gradient(90deg,var(--border-dim),var(--accent-cyan)); box-shadow: 0 0 8px rgba(0,240,255,.5); }
+  .est-text { font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--text-muted);letter-spacing:.15em; text-transform: uppercase;}
  
-  @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
  
-  /* ── MODAL ── */
+  /* ── MODAL (深度玻璃化) ── */
   .modal-overlay {
     position:fixed;inset:0;z-index:200;
     display:flex;align-items:center;justify-content:center;
-    background:rgba(6,12,24,.88);backdrop-filter:blur(6px);
-    opacity:0;pointer-events:none;transition:opacity .3s ease;
+    background:rgba(2, 6, 17, 0.85); 
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    opacity:0;pointer-events:none;transition:opacity .4s ease;
+    padding: 20px; 
   }
   .modal-overlay.active { opacity:1;pointer-events:all; }
   .modal {
-    position:relative;width:560px;max-height:82vh;
-    background:linear-gradient(160deg,#0c1d36,#07101f);
-    border:1px solid var(--border);border-radius:4px;
+    position:relative;
+    width:100%; max-width:640px; /* 弹窗更大气 */
+    max-height:88vh; 
+    background: rgba(8, 16, 30, 0.85);
+    border: 1px solid rgba(0,240,255,0.3);
+    border-radius: 6px;
     overflow:hidden;display:flex;flex-direction:column;
-    box-shadow:0 0 80px rgba(0,212,255,.12),0 0 0 1px rgba(0,212,255,.05);
-    transform:translateY(20px) scale(.97);
-    transition:transform .35s cubic-bezier(.16,1,.3,1);
+    box-shadow: 0 0 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,240,255,0.1), inset 0 0 60px rgba(0,240,255,0.05);
+    transform:translateY(30px) scale(.95);
+    transition:transform .4s cubic-bezier(.16,1,.3,1);
   }
   .modal-overlay.active .modal { transform:none; }
-  .modal-corner { position:absolute;width:16px;height:16px;z-index:10; }
-  .modal-corner::before,.modal-corner::after { content:'';position:absolute;background:var(--accent-cyan); }
-  .modal-corner::before { width:100%;height:1px;top:0; } .modal-corner::after { width:1px;height:100%;top:0; }
+  .modal-corner { position:absolute;width:20px;height:20px;z-index:10; }
+  .modal-corner::before,.modal-corner::after { content:'';position:absolute;background:var(--accent-cyan); box-shadow: 0 0 8px var(--accent-cyan);}
+  .modal-corner::before { width:100%;height:2px;top:0; } .modal-corner::after { width:2px;height:100%;top:0; }
   .modal-corner-tl{top:0;left:0} .modal-corner-tr{top:0;right:0;transform:scaleX(-1)} .modal-corner-bl{bottom:0;left:0;transform:scaleY(-1)} .modal-corner-br{bottom:0;right:0;transform:scale(-1)}
  
-  .modal-header { padding:22px 26px 18px;border-bottom:1px solid var(--border-dim);flex-shrink:0;position:relative; }
-  .modal-label { font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px; }
-  .modal-title { font-size:18px;font-weight:700;color:var(--text-primary);letter-spacing:.04em;line-height:1.3;text-shadow:0 0 30px rgba(0,212,255,.15); }
-  .modal-sub { font-size:11px;color:var(--text-muted);margin-top:5px;letter-spacing:.04em;line-height:1.6; }
-  .modal-close { position:absolute;top:20px;right:22px;width:28px;height:28px;border-radius:2px;background:rgba(0,212,255,.06);border:1px solid var(--border-dim);color:var(--text-secondary);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:'Share Tech Mono',monospace; }
-  .modal-close:hover { background:rgba(0,212,255,.15);border-color:var(--accent-cyan);color:var(--accent-cyan); }
+  .modal-header { padding:28px 28px 20px; border-bottom:1px solid rgba(0,240,255,0.15);flex-shrink:0;position:relative; background: linear-gradient(180deg, rgba(0,240,255,0.05), transparent); }
+  .modal-label { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--accent-cyan);letter-spacing:.25em;text-transform:uppercase;margin-bottom:10px; padding-right: 40px;}
+  .modal-title { font-size:22px;font-weight:700;color:var(--text-primary);letter-spacing:.05em;line-height:1.4;text-shadow:0 0 20px rgba(0,240,255,.3); padding-right: 40px; }
+  .modal-sub { font-size:13px;color:var(--text-secondary);margin-top:8px;letter-spacing:.05em;line-height:1.6; opacity: 0.9;}
+  
+  .modal-close { 
+    position:absolute;top:28px;right:28px;
+    width:36px;height:36px; 
+    border-radius:4px;background:rgba(0,240,255,.05);border:1px solid rgba(0,240,255,.2);
+    color:var(--text-primary);font-size:18px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;transition:all .3s ease;font-family:'Share Tech Mono',monospace; 
+  }
+  .modal-close:hover, .modal-close:active { background:rgba(0,240,255,.2);border-color:var(--accent-cyan); box-shadow: 0 0 15px rgba(0,240,255,.3); transform: rotate(90deg); }
  
-  .modal-body { overflow-y:auto;flex:1;padding:22px 26px 26px;scrollbar-width:thin;scrollbar-color:rgba(0,212,255,.2) transparent; }
-  .modal-body::-webkit-scrollbar { width:4px; }
-  .modal-body::-webkit-scrollbar-thumb { background:rgba(0,212,255,.2);border-radius:2px; }
+  .modal-body { 
+    overflow-y:auto;flex:1;padding:28px 28px 32px;
+    -webkit-overflow-scrolling: touch; 
+    scrollbar-width:thin;scrollbar-color:rgba(0,240,255,.3) transparent; 
+  }
+  .modal-body::-webkit-scrollbar { width:6px; }
+  .modal-body::-webkit-scrollbar-thumb { background:rgba(0,240,255,.3);border-radius:3px; }
  
   /* Modal content styles */
   .content-intro {
-    font-size:12.5px;color:var(--text-secondary);line-height:1.9;letter-spacing:.04em;
-    margin-bottom:22px;padding:14px 16px;
-    background:rgba(0,212,255,.04);border-left:2px solid var(--accent-cyan);border-radius:0 3px 3px 0;
+    font-size:14px;color:var(--text-secondary);line-height:1.9;letter-spacing:.05em;
+    margin-bottom:28px;padding:18px 20px;
+    background: linear-gradient(90deg, rgba(0,240,255,0.08) 0%, rgba(0,240,255,0.01) 100%);
+    border-left:3px solid var(--accent-cyan);border-radius:0 4px 4px 0;
+    box-shadow: inset 0 0 20px rgba(0,240,255,0.02);
   }
-  .content-intro strong { color:var(--text-primary);font-weight:500; }
+  .content-intro strong { color:var(--text-primary);font-weight:600; text-shadow: 0 0 10px rgba(0,240,255,0.2);}
  
-  .content-block { margin-bottom:20px; }
+  .content-block { margin-bottom:28px; }
   .content-block-title {
-    font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--accent-cyan);
-    letter-spacing:.18em;text-transform:uppercase;margin-bottom:11px;
-    display:flex;align-items:center;gap:8px;
+    font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--accent-cyan);
+    letter-spacing:.2em;text-transform:uppercase;margin-bottom:16px;
+    display:flex;align-items:center;gap:12px;
   }
-  .content-block-title::after { content:'';flex:1;height:1px;background:var(--border-dim); }
+  .content-block-title::after { content:'';flex:1;height:1px;background:linear-gradient(90deg, rgba(0,240,255,0.2), transparent); }
  
-  .chip-wrap { display:flex;flex-wrap:wrap;gap:7px; }
+  .chip-wrap { display:flex;flex-wrap:wrap;gap:10px; }
   .chip {
-    font-size:11px;color:var(--text-secondary);background:rgba(0,212,255,.05);
-    border:1px solid var(--border-dim);border-radius:2px;padding:4px 10px;letter-spacing:.03em;transition:all .2s;
+    font-size:13px;color:var(--text-secondary);background:rgba(0,0,0,0.3);
+    border:1px solid rgba(0,240,255,0.1);border-radius:3px;padding:6px 14px;letter-spacing:.04em;transition:all .3s;
   }
-  .chip:hover { border-color:rgba(0,212,255,.3);color:var(--text-primary); }
+  .chip:hover { border-color:rgba(0,240,255,.4);color:var(--text-primary); background: rgba(0,240,255,0.05); box-shadow: 0 0 15px rgba(0,240,255,0.1);}
   .chip-accent {
-    font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--accent-cyan);
-    background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);
-    border-radius:2px;padding:4px 11px;letter-spacing:.05em;
+    font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--accent-cyan);
+    background:rgba(0,240,255,.08);border:1px solid rgba(0,240,255,.3);
+    border-radius:3px;padding:6px 14px;letter-spacing:.08em; font-weight: 600; box-shadow: 0 0 10px rgba(0,240,255,0.1);
   }
  
-  .feature-list { display:flex;flex-direction:column;gap:8px; }
-  .feature-item { display:flex;align-items:flex-start;gap:10px;padding:9px 12px;background:rgba(0,212,255,.03);border-radius:3px;border:1px solid var(--border-dim);transition:border-color .2s; }
-  .feature-item:hover { border-color:rgba(0,212,255,.2); }
-  .feature-dot { width:5px;height:5px;border-radius:50%;background:var(--accent-cyan);flex-shrink:0;margin-top:5px;box-shadow:0 0 6px var(--accent-cyan); }
-  .feature-text { font-size:12px;color:var(--text-secondary);line-height:1.75;letter-spacing:.03em; }
-  .feature-text strong { color:var(--text-primary);font-weight:500; }
+  .feature-list { display:flex;flex-direction:column;gap:12px; }
+  .feature-item { display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:rgba(0,0,0,0.2);border-radius:4px;border:1px solid rgba(0,240,255,0.08);transition:all .3s ease; }
+  .feature-item:hover { border-color:rgba(0,240,255,.3); background: rgba(0,240,255,0.03); transform: translateX(4px);}
+  .feature-dot { width:6px;height:6px;border-radius:50%;background:var(--accent-cyan);flex-shrink:0;margin-top:8px;box-shadow:0 0 8px var(--accent-cyan); }
+  .feature-text { font-size:14px;color:var(--text-secondary);line-height:1.8;letter-spacing:.04em; }
+  .feature-text strong { color:var(--text-primary);font-weight:600; }
  
-  .two-col { display:grid;grid-template-columns:1fr 1fr;gap:8px; }
-  .sub-block { padding:12px 14px;background:rgba(0,212,255,.03);border:1px solid var(--border-dim);border-radius:3px; }
-  .sub-block-title { font-size:11.5px;font-weight:600;color:var(--text-primary);letter-spacing:.04em;margin-bottom:9px;padding-bottom:7px;border-bottom:1px solid var(--border-dim); }
+  .two-col { display:grid;grid-template-columns:1fr 1fr;gap:14px; }
+  @media (max-width: 450px) { .two-col { grid-template-columns: 1fr; } }
+
+  .sub-block { padding:16px;background:rgba(0,0,0,0.2);border:1px solid rgba(0,240,255,0.1);border-radius:4px; }
+  .sub-block-title { font-size:14px;font-weight:600;color:var(--text-primary);letter-spacing:.05em;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(0,240,255,0.1); text-shadow: 0 0 10px rgba(0,240,255,0.2);}
   .sub-block ul { list-style:none; }
-  .sub-block ul li { font-size:11px;color:var(--text-secondary);letter-spacing:.03em;line-height:1.8;padding-left:12px;position:relative; }
-  .sub-block ul li::before { content:'·';position:absolute;left:0;color:var(--accent-cyan); }
+  .sub-block ul li { font-size:13px;color:var(--text-secondary);letter-spacing:.04em;line-height:1.9;padding-left:16px;position:relative; margin-bottom: 6px;}
+  .sub-block ul li::before { content:'·';position:absolute;left:0;color:var(--accent-cyan); font-weight: bold; font-size: 16px;}
  
-  .note { margin-top:10px;font-size:11px;color:var(--text-muted);letter-spacing:.04em;font-style:italic; }
+  .note { margin-top:14px;font-size:13px;color:var(--text-muted);letter-spacing:.05em;font-style:italic; border-left: 2px solid var(--text-muted); padding-left: 10px;}
 </style>
 </head>
 <body>
@@ -221,57 +325,57 @@
     <div class="header-badge"><div class="badge-dot"></div><span class="badge-text">Industrial IoT · Smart Monitoring</span></div>
     <div class="logo-mark">
       <svg class="hex-svg" viewBox="0 0 40 40" fill="none">
-        <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" stroke="rgba(0,212,255,0.5)" stroke-width="1" fill="rgba(0,212,255,0.06)"/>
-        <polygon points="20,7 31,13.5 31,26.5 20,33 9,26.5 9,13.5" stroke="rgba(0,212,255,0.3)" stroke-width="0.5" fill="none"/>
+        <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" stroke="rgba(0,240,255,0.6)" stroke-width="1.5" fill="rgba(0,240,255,0.08)"/>
+        <polygon points="20,7 31,13.5 31,26.5 20,33 9,26.5 9,13.5" stroke="rgba(0,240,255,0.4)" stroke-width="0.5" fill="none"/>
         <text x="20" y="24" text-anchor="middle" class="hex-inner">NS</text>
       </svg>
     </div>
     <div class="data-stream"><div class="data-stream-line"></div><div class="data-stream-line"></div><div class="data-stream-line"></div></div>
     <div class="company-name-cn">上海牛苏科技有限公司</div>
     <div class="company-name-en">Shanghai Niusu Technology Co., Ltd.</div>
-    <div class="tagline" onclick="openModal('intro')" style="cursor:pointer;transition:all .22s">
+    <div class="tagline" onclick="openModal('intro')">
       <div class="tagline-text">国内唯一专注于系列智慧监测技术研发<br>与智慧运维服务的创新型科技企业</div>
-      <div class="click-hint" style="margin-top:8px;display:inline-flex">查看公司简介</div>
+      <div class="click-hint">查看公司简介</div>
     </div>
   </div>
  
   <div class="stats-row">
     <div class="stat-item"><div class="stat-value">2015</div><div class="stat-label">创立年份</div></div>
-    <div class="stat-item"><div class="stat-value">10<span style="font-size:14px;color:var(--text-secondary)">+</span></div><div class="stat-label">行业覆盖</div></div>
+    <div class="stat-item"><div class="stat-value">10<span style="font-size:16px;color:var(--text-secondary)">+</span></div><div class="stat-label">行业覆盖</div></div>
     <div class="stat-item"><div class="stat-value">24/7</div><div class="stat-label">在线监测</div></div>
   </div>
  
   <div class="section">
-    <div class="section-title">核心产品体系 <span style="font-size:9px;color:rgba(0,212,255,.4);letter-spacing:.05em;font-family:'Share Tech Mono',monospace">点击查看详情</span></div>
+    <div class="section-title">核心产品体系 <span style="font-size:11px;color:rgba(0,240,255,.6);letter-spacing:.05em;text-transform:none;font-family:'Noto Sans SC',sans-serif;">点击查看详情</span></div>
     <div class="products-grid">
       <div class="product-card" onclick="openModal('dong')">
         <span class="product-icon">⚙️</span>
-        <div class="product-name">动设备智慧监测系统</div>
-        <div class="product-sub">电机 / 泵 / 风机 / 压缩机</div>
-        <div class="click-hint">查看详情</div>
+        <div class="product-name">动设备监测系统</div>
+        <div class="product-sub">电机/泵/风机/压缩机</div>
+        <div class="click-hint">系统详情</div>
       </div>
       <div class="product-card" onclick="openModal('jing')">
         <span class="product-icon">🏭</span>
-        <div class="product-name">静设备智慧监测系统</div>
-        <div class="product-sub">压力容器 / 管道 / 储罐</div>
-        <div class="click-hint">查看详情</div>
+        <div class="product-name">静设备监测系统</div>
+        <div class="product-sub">压力容器/管道/储罐</div>
+        <div class="click-hint">系统详情</div>
       </div>
       <div class="product-card" onclick="openModal('dian')">
         <span class="product-icon">⚡</span>
-        <div class="product-name">配电房智慧监测系统</div>
-        <div class="product-sub">高低压配电 / 用电安全</div>
-        <div class="click-hint">查看详情</div>
+        <div class="product-name">配电房监测系统</div>
+        <div class="product-sub">高低压配电/用电安全</div>
+        <div class="click-hint">系统详情</div>
       </div>
       <div class="product-card" onclick="openModal('xiao')">
         <span class="product-icon">🔥</span>
-        <div class="product-name">消防泵房监测系统</div>
-        <div class="product-sub">设施完整性 / 合规管控</div>
-        <div class="click-hint">查看详情</div>
+        <div class="product-name">消防泵房监测</div>
+        <div class="product-sub">设施完整性/合规管控</div>
+        <div class="click-hint">系统详情</div>
       </div>
     </div>
   </div>
  
-  <div class="industries-section" style="padding:16px 30px;border-bottom:1px solid var(--border-dim);animation:fadeUp .6s .5s both">
+  <div class="industries-section">
     <div class="section-title">适用场景</div>
     <div class="tags-wrap">
       <span class="tag">矿山</span><span class="tag">石化</span><span class="tag">钢铁</span>
@@ -280,7 +384,7 @@
       <span class="tag">城市生命线</span>
     </div>
   </div>
- 
+
   <div class="values-section">
     <div class="section-title">核心价值</div>
     <div class="value-items">
@@ -289,11 +393,30 @@
       <div class="value-item"><div class="value-line"></div><div class="value-text">让生产更高效</div></div>
     </div>
   </div>
+
+  <!-- 联系方式操作区 -->
+  <div class="section contact-section">
+    <div class="section-title">联系我们</div>
+    <div class="contact-grid">
+      <a href="tel:13915561401" class="contact-btn">
+        <span class="contact-icon">📞</span> 拨打电话
+      </a>
+      <a href="mailto:huz46922@gmail.com" class="contact-btn">
+        <span class="contact-icon">✉️</span> 发送邮件
+      </a>
+      <a href="http://www.niusukeji.com" target="_blank" class="contact-btn">
+        <span class="contact-icon">🌐</span> 官方网站
+      </a>
+      <a href="https://uri.amap.com/marker?name=江苏省泰兴市经济开发区" target="_blank" class="contact-btn">
+        <span class="contact-icon">📍</span> 导航至公司
+      </a>
+    </div>
+  </div>
  
   <div class="card-footer">
     <div class="footer-info">
-      <div><span>LOC</span> · 上海市</div>
-      <div style="margin-top:3px"><span>EST</span> · 2015 年 6 月</div>
+      <div><span>LOC</span> · 江苏省泰兴市</div>
+      <div style="margin-top:6px"><span>EST</span> · 2015 年 6 月</div>
     </div>
     <div class="established"><div class="est-bar"></div><div class="est-text">NIUSU TECH</div></div>
   </div>
@@ -469,7 +592,7 @@ const products = {
             </ul>
           </div>
         </div>
-        <div style="margin-top:8px" class="sub-block">
+        <div style="margin-top:10px" class="sub-block">
           <div class="sub-block-title">🛢️ 储罐 / 换热器等静设备</div>
           <ul>
             <li>跑冒滴漏、局部腐蚀、部件老化等问题全面覆盖</li>
@@ -635,13 +758,19 @@ function openModal(key) {
   document.getElementById('modalBody').innerHTML = p.body;
   document.getElementById('modalBody').scrollTop = 0;
   document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
 }
+
 function closeModal() {
   document.getElementById('modalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+  document.body.style.overflowX = 'hidden';
 }
+
 function handleOverlayClick(e) {
   if (e.target === document.getElementById('modalOverlay')) closeModal();
 }
+
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 </script>
 </body>
