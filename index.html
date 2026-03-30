@@ -7,9 +7,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* 主页背景渐变 */
-    --bg-gradient: linear-gradient(135deg, #eef2f6 0%, #e0eafc 100%);
-    --grid-line: rgba(26, 115, 232, 0.06);
+    /* 主页背景渐变 - 升级为更明显的清透蓝 */
+    --bg-gradient: linear-gradient(135deg, #dbeafe 0%, #9fc4f8 100%);
+    --grid-line: rgba(26, 115, 232, 0.08);
     
     /* 主页玻璃质感 (纯白) */
     --glass-bg: rgba(255, 255, 255, 0.85);
@@ -69,14 +69,14 @@
   
   body::after {
     content:''; position:fixed; inset:0;
-    background: radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+    background: radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.65) 0%, transparent 70%);
     z-index: -2; transform: translateZ(0);
   }
   @keyframes gridDrift { 100%{ transform:translateY(60px) translateZ(0); } }
   
   .glow-orb { position:fixed; border-radius:50%; pointer-events:none; z-index: -1; will-change: transform; transform: translateZ(0); }
-  .glow-orb-1 { width:700px;height:700px; background:radial-gradient(circle, rgba(26,115,232,0.06) 0%, transparent 60%); top:-250px;left:-250px; animation:floatOrb1 20s ease-in-out infinite alternate; }
-  .glow-orb-2 { width:500px;height:500px; background:radial-gradient(circle, rgba(14,165,233,0.06) 0%, transparent 60%); bottom:-150px;right:-150px; animation:floatOrb2 18s ease-in-out infinite alternate; }
+  .glow-orb-1 { width:700px;height:700px; background:radial-gradient(circle, rgba(26,115,232,0.12) 0%, transparent 60%); top:-250px;left:-250px; animation:floatOrb1 20s ease-in-out infinite alternate; }
+  .glow-orb-2 { width:500px;height:500px; background:radial-gradient(circle, rgba(14,165,233,0.12) 0%, transparent 60%); bottom:-150px;right:-150px; animation:floatOrb2 18s ease-in-out infinite alternate; }
   @keyframes floatOrb1 { to{ transform:translate(60px,80px) translateZ(0); } }
   @keyframes floatOrb2 { to{ transform:translate(-50px,-60px) translateZ(0); } }
  
@@ -188,7 +188,7 @@
   .product-card:hover .click-hint { opacity:1; }
  
   .tags-wrap { display:flex;flex-wrap:wrap;gap:12px; }
-  .tag { font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--text-secondary);background:#ffffff;border: 1px solid var(--modal-border);border-radius:4px;padding:6px 16px;letter-spacing:.15em;transition:all .3s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
+  .tag { font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--text-secondary);background:#f8fafc;border: 1px solid var(--modal-border);border-radius:4px;padding:6px 16px;letter-spacing:.15em;transition:all .3s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
   .tag:hover { background:var(--c-blue);color:#fff;border-color:var(--c-blue); transform: translateY(-2px) scale(1.02); box-shadow: 0 6px 12px rgba(26,115,232,0.15);}
  
   .value-items { display:flex;flex-direction:column;gap:16px; }
@@ -219,32 +219,24 @@
   .est-bar { width:50px;height:2px;background:linear-gradient(90deg,transparent,var(--c-blue)); }
   .est-text { font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:var(--text-muted);letter-spacing:.25em; text-transform: uppercase;}
  
-  /* ── 弹窗 MODAL (深度护眼蓝底) ── */
+  /* ── 弹窗 MODAL ── */
   .modal-overlay {
     position:fixed;inset:0;z-index:200; display:flex;align-items:center;justify-content:center;
-    background:rgba(15, 23, 42, 0.6); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    background:rgba(15, 23, 42, 0.6); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
     opacity:0;pointer-events:none;transition:opacity .4s ease;
     padding: 20px; transform: translateZ(0);
   }
   .modal-overlay.active { opacity:1;pointer-events:all; }
-  
   .modal {
     position:relative; width:100%; max-width:680px; max-height:88vh; 
-    /* 【核心优化】弹窗整体背景设为高护眼的极浅灰蓝 */
-    background: #eef4fa; 
-    border: none; border-radius: 12px;
+    background: #eef4fa; border: none; border-radius: 12px;
     overflow:hidden;display:flex;flex-direction:column; box-shadow: 0 30px 60px rgba(0,0,0,0.15);
     transform:translateY(40px) scale(0.96) translateZ(0); 
     transition:transform .5s cubic-bezier(0.2, 0.8, 0.2, 1); will-change: transform;
   }
   .modal-overlay.active .modal { transform:none; }
   
-  .modal-header { 
-    padding:34px 36px 26px; border-bottom:none;flex-shrink:0;position:relative; 
-    background: linear-gradient(135deg, #0052cc 0%, #1a73e8 100%); color: #fff; 
-    /* 增加一层向下的阴影，让深色头部和浅蓝内容区产生明显的层叠感 */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08); z-index: 10;
-  }
+  .modal-header { padding:34px 36px 26px; border-bottom:none;flex-shrink:0;position:relative; background: linear-gradient(135deg, #0052cc 0%, #1a73e8 100%); color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.08); z-index: 10; }
   .modal-label { font-family:'Share Tech Mono',monospace;font-size:11px;color:rgba(255,255,255,0.8);letter-spacing:.35em;text-transform:uppercase;margin-bottom:14px; padding-right: 45px;}
   .modal-title { font-size:25px;font-weight:700;color:#fff;letter-spacing:.08em;line-height:1.4; padding-right: 45px; }
   .modal-sub { font-size:13.5px;color:rgba(255,255,255,0.9);margin-top:10px;letter-spacing:.08em;line-height:1.7;}
@@ -259,7 +251,6 @@
   .modal-body { 
     overflow-y:auto;flex:1;padding:34px 36px 45px; -webkit-overflow-scrolling: touch; 
     scrollbar-width:thin;scrollbar-color:var(--c-blue) transparent; 
-    /* 【核心优化】内容区铺设护眼蓝渐变，缓解疲劳 */
     background: linear-gradient(180deg, #f4f8fc 0%, #e8f0f8 100%);
   }
   .modal-body::-webkit-scrollbar { width:6px; }
@@ -279,11 +270,9 @@
   .modal-overlay.active .content-block:nth-child(4) { animation-delay: 0.25s; }
   .modal-overlay.active .content-block:nth-child(5) { animation-delay: 0.3s; }
 
-  /* --- 内部组件：统一纯白卡片，在护眼蓝底上悬浮 --- */
   .content-intro {
     font-size:14.5px;color:var(--modal-text-sub);line-height:2.1;letter-spacing:.08em;
-    margin-bottom:36px;padding:24px 28px; 
-    background: #ffffff; /* 确保纯白卡片 */
+    margin-bottom:36px;padding:24px 28px; background: #ffffff;
     border: 1px solid var(--modal-border); border-left: 4px solid var(--c-blue);
     border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
   }
@@ -298,13 +287,12 @@
   }
   .content-block-title::after { content:'';flex:1;height:1px;background:linear-gradient(90deg, #d1d9e6, transparent); }
  
-  /* 流程图组件 */
+  /* --- 高级排版组件 --- */
   .flow-container { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 20px 0; flex-wrap: wrap; }
   .flow-step { white-space: nowrap; background: var(--c-blue); color: #fff; padding: 8px 22px; border-radius: 6px; font-weight: 600; font-size: 14.5px; box-shadow: 0 4px 10px rgba(26,115,232,0.2); letter-spacing: 0.1em; transition: transform 0.3s; }
   .flow-step:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(26,115,232,0.3); }
   .flow-arrow { color: var(--c-blue); font-weight: bold; font-size: 18px; }
 
-  /* 标签体系 - 统一白底 */
   .chip-wrap { display:flex;flex-wrap:wrap;gap:12px; }
   .chip { 
     font-size:13.5px;color:var(--modal-text-sub);background:#ffffff; 
@@ -331,7 +319,6 @@
   }
   .green-list .chip-accent:hover { background:#ecfdf5; border-color: #6ee7b7; color: #047857; transform: translateY(-2px); }
 
-  /* 列表卡片组件 - 白卡片 */
   .blue-list .feature-item { border-left-color: var(--c-blue); }
   .blue-list .feature-item:hover { background: #f8fafc; border-color: #bfdbfe; border-left-color: var(--c-blue); }
   .blue-list .feature-text strong { color: var(--c-blue); }
@@ -351,7 +338,6 @@
   .feature-text { font-size:14.5px;color:var(--modal-text-sub);line-height:1.9;letter-spacing:.06em; }
   .feature-text strong { color:var(--modal-text);font-weight:700; }
  
-  /* 价值卡片三列网格 - 白卡片 */
   .value-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px;}
   @media (max-width: 500px) { .value-card-grid { grid-template-columns: 1fr; } }
   .value-card { background: #ffffff; border: 1px solid var(--modal-border); border-radius: 8px; padding: 22px 14px; text-align: center; transition: all 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.03);}
@@ -360,7 +346,6 @@
   .value-card-title { font-size: 15px; font-weight: 700; color: var(--modal-text); margin-bottom: 8px; letter-spacing: 0.05em;}
   .value-card-desc { font-size: 12.5px; color: var(--modal-text-sub); line-height: 1.6;}
 
-  /* 警告面板双列网格 - 白卡片 */
   .two-col { display:grid;grid-template-columns:1fr 1fr;gap:18px; }
   @media (max-width: 450px) { .two-col { grid-template-columns: 1fr; } }
   .sub-block-warn { 
@@ -376,7 +361,6 @@
   .sub-block-warn ul li { font-size:13.5px;color:var(--modal-text-sub);letter-spacing:.06em;line-height:2.1;padding-left:20px;position:relative; margin-bottom: 8px;}
   .sub-block-warn ul li::before { content:'■';position:absolute;left:0;color:var(--c-red); font-size: 10px; top: 2px;}
 
-  /* 图标宫格矩阵 - 白卡片 */
   .icon-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   @media (min-width: 480px) { .icon-card-grid { grid-template-columns: repeat(3, 1fr); } }
   .icon-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 20px 12px; background: #ffffff; border: 1px solid var(--modal-border); border-radius: 8px; transition: all 0.3s; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.03);}
@@ -384,7 +368,6 @@
   .icon-card .ic { font-size: 28px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
   .icon-card .txt { font-size: 13.5px; font-weight: 600; color: var(--modal-text); letter-spacing: 0.05em; line-height: 1.4; }
 
-  /* 序号核心卡片 - 白卡片 */
   .numbered-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
   @media (min-width: 480px) { .numbered-grid { grid-template-columns: 1fr 1fr; } }
   .numbered-card { display: flex; align-items: flex-start; gap: 16px; padding: 22px; background: #ffffff; border: 1px solid var(--modal-border); border-radius: 8px; transition: all 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.03);}
@@ -396,7 +379,6 @@
  
   .note { margin-top:20px;font-size:13.5px;color:#718096;letter-spacing:.08em;font-style:italic; border-left: 3px solid #cbd5e1; padding-left: 14px; background: #ffffff; padding: 12px 16px; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);}
 
-  /* 移动端专属完美适配 (Mobile Optimization) */
   @media (max-width: 480px) {
     body { padding: 15px 10px; }
     
