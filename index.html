@@ -7,21 +7,36 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-deep: #030712; 
-    --accent-cyan: #00e5ff; 
-    --accent-cyan-glow: rgba(0, 229, 255, 0.5);
-    --accent-blue: #1a73e8; 
-    --text-primary: #ffffff;
-    --text-secondary: #a8c7fa; 
-    --text-muted: #6b8aa8;
-    --border-dim: rgba(255, 255, 255, 0.06); 
-    --glass-bg: rgba(6, 12, 24, 0.65); 
-    --glass-border: rgba(0, 229, 255, 0.15);
+    /* 日间护眼模式核心色彩 */
+    --bg-gradient: linear-gradient(135deg, #eef2f6 0%, #e0eafc 100%);
+    --grid-line: rgba(26, 115, 232, 0.06);
+    
+    /* 玻璃拟物化 (纯白) */
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 1);
+    
+    /* 护眼高对比度文字 */
+    --text-primary: #0f172a; 
+    --text-secondary: #475569; 
+    --text-muted: #64748b; 
+    
+    /* 弹窗白底黑字主题保持一致 */
+    --modal-bg: #ffffff;
+    --modal-text: #0f172a;
+    --modal-text-sub: #475569;
+    --modal-border: #e2e8f0;
+
+    /* 企业科技蓝点缀 */
+    --c-blue: #1a73e8;
+    --c-blue-light: #eff6ff;
+    --c-red: #e53e3e;
+    --c-green: #059669;
+    --c-orange: #dd6b20;
   }
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
   
   body {
-    background: var(--bg-deep);
+    background: var(--bg-gradient);
     min-height: 100vh;
     display: flex; 
     align-items: flex-start; 
@@ -31,6 +46,7 @@
     overflow-y: auto;   
     padding: 30px 15px; 
     overscroll-behavior-y: none;
+    color: var(--text-primary);
   }
 
   .noise-overlay {
@@ -42,25 +58,26 @@
   body::before {
     content:''; position:fixed; inset:0;
     background-image: 
-      linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px), 
-      linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
-    background-size: 70px 70px;
+      linear-gradient(var(--grid-line) 1px, transparent 1px), 
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 60px 60px;
     background-position: center center;
     animation: gridDrift 40s linear infinite;
     z-index: -2;
-    -webkit-mask-image: radial-gradient(circle at 50% 30%, black 20%, transparent 85%);
+    -webkit-mask-image: radial-gradient(circle at 50% 30%, black 40%, transparent 85%);
     will-change: transform; transform: translateZ(0);
   }
+  
   body::after {
     content:''; position:fixed; inset:0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(26, 115, 232, 0.12) 0%, transparent 70%);
+    background: radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
     z-index: -2; transform: translateZ(0);
   }
-  @keyframes gridDrift { 100%{ transform:translateY(70px) translateZ(0); } }
+  @keyframes gridDrift { 100%{ transform:translateY(60px) translateZ(0); } }
   
   .glow-orb { position:fixed; border-radius:50%; pointer-events:none; z-index: -1; will-change: transform; transform: translateZ(0); }
-  .glow-orb-1 { width:700px;height:700px; background:radial-gradient(circle, rgba(26,115,232,0.2) 0%, rgba(26,115,232,0.05) 40%, transparent 70%); top:-250px;left:-250px; animation:floatOrb1 20s ease-in-out infinite alternate; }
-  .glow-orb-2 { width:500px;height:500px; background:radial-gradient(circle, rgba(0,229,255,0.12) 0%, rgba(0,229,255,0.03) 40%, transparent 70%); bottom:-150px;right:-150px; animation:floatOrb2 18s ease-in-out infinite alternate; }
+  .glow-orb-1 { width:700px;height:700px; background:radial-gradient(circle, rgba(26,115,232,0.06) 0%, transparent 60%); top:-250px;left:-250px; animation:floatOrb1 20s ease-in-out infinite alternate; }
+  .glow-orb-2 { width:500px;height:500px; background:radial-gradient(circle, rgba(14,165,233,0.06) 0%, transparent 60%); bottom:-150px;right:-150px; animation:floatOrb2 18s ease-in-out infinite alternate; }
   @keyframes floatOrb1 { to{ transform:translate(60px,80px) translateZ(0); } }
   @keyframes floatOrb2 { to{ transform:translate(-50px,-60px) translateZ(0); } }
  
@@ -70,10 +87,10 @@
   .card {
     position:relative; width: 100%; height: 100%;
     background: var(--glass-bg);
-    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.05); border-top: 1px solid rgba(255, 255, 255, 0.15); 
-    border-radius: 12px; overflow: hidden;
-    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 229, 255, 0.05), 0 0 120px rgba(26, 115, 232, 0.15), inset 0 0 60px rgba(0, 229, 255, 0.02);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border); 
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04), 0 0 80px rgba(26, 115, 232, 0.08);
     animation: cardIn 1s cubic-bezier(.16,1,.3,1) both;
     transform: translateZ(0); transform-style: preserve-3d; will-change: transform;
   }
@@ -81,63 +98,64 @@
   
   .card::after {
     content:''; position:absolute; left:0;right:0; height:1.5px;
-    background:linear-gradient(90deg,transparent,rgba(0,229,255,0.9),transparent);
+    background:linear-gradient(90deg,transparent,rgba(26,115,232,0.4),transparent);
     opacity:0; animation:scan 6s cubic-bezier(0.4, 0, 0.2, 1) infinite; pointer-events:none;
-    box-shadow: 0 0 20px var(--accent-cyan); will-change: top, opacity;
+    will-change: top, opacity;
   }
-  @keyframes scan { 0%{top:0;opacity:0} 10%{opacity:.7} 90%{opacity:.7} 100%{top:100%;opacity:0} }
+  @keyframes scan { 0%{top:0;opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{top:100%;opacity:0} }
   
-  .corner { position:absolute; width:24px;height:24px; z-index:10; animation: cornerBreathe 4s infinite alternate; will-change: opacity; }
-  @keyframes cornerBreathe { from{ opacity: 0.4; } to { opacity: 1; } }
-  .corner::before,.corner::after { content:''; position:absolute; background:var(--accent-cyan); box-shadow:0 0 8px var(--accent-cyan-glow); }
+  .corner { position:absolute; width:24px;height:24px; z-index:10; opacity: 0.6;}
+  .corner::before,.corner::after { content:''; position:absolute; background:var(--c-blue); }
   .corner::before { width:100%;height:1.5px;top:0; } .corner::after { width:1.5px;height:100%;top:0; }
   .corner-tl{top:0;left:0} .corner-tr{top:0;right:0;transform:scaleX(-1)} .corner-bl{bottom:0;left:0;transform:scaleY(-1)} .corner-br{bottom:0;right:0;transform:scale(-1)}
  
-  .card-header { padding:38px 85px 32px 30px; border-bottom:1px solid var(--border-dim); position:relative; background: radial-gradient(circle at 85% 0%, rgba(0,229,255,0.06), transparent); }
+  .card-header { padding:38px 85px 32px 30px; border-bottom:1px solid var(--modal-border); position:relative; background: radial-gradient(circle at 85% 0%, var(--c-blue-light), transparent); }
   @media (min-width: 480px) { .card-header { padding:42px 95px 36px 36px; } }
   
-  .header-badge { display:inline-flex;align-items:center;gap:8px; background:rgba(0,229,255,.05);border:1px solid var(--glass-border);border-radius:4px;padding:6px 14px;margin-bottom:20px; box-shadow: inset 0 0 10px rgba(0,229,255,.05); }
-  .badge-dot { width:6px;height:6px;border-radius:50%;background:var(--accent-cyan);box-shadow:0 0 12px var(--accent-cyan), 0 0 4px #fff;animation:pulse 2s ease-in-out infinite; will-change: transform, opacity; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.6)} }
-  .badge-text { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--accent-cyan);letter-spacing:.2em;text-transform:uppercase; font-weight: 700; text-shadow: 0 0 10px rgba(0,229,255,.3);}
+  .header-badge { display:inline-flex;align-items:center;gap:8px; background:var(--c-blue-light);border:1px solid rgba(26,115,232,0.2);border-radius:4px;padding:6px 14px;margin-bottom:20px; }
+  .badge-dot { width:6px;height:6px;border-radius:50%;background:var(--c-blue); animation:pulse 2s ease-in-out infinite; will-change: transform, opacity; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+  .badge-text { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--c-blue);letter-spacing:.2em;text-transform:uppercase; font-weight: 700; }
   @media (min-width: 380px) { .badge-text { font-size: 12px; letter-spacing:.25em; } }
   
   .logo-mark { position:absolute;top:34px;right:28px; animation:spinLogo 30s linear infinite; will-change: transform; transform: translateZ(0); }
   @keyframes spinLogo { 100% { transform: rotate(360deg) translateZ(0); } }
-  .hex-svg { width:48px;height:48px;filter:drop-shadow(0 0 8px rgba(0,229,255,.4)); }
-  .hex-inner { font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;fill:var(--accent-cyan); animation: counterSpinLogo 30s linear infinite; transform-origin: 24px 24px; will-change: transform;}
+  .hex-svg { width:48px;height:48px; }
+  .hex-inner { font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;fill:var(--c-blue); animation: counterSpinLogo 30s linear infinite; transform-origin: 24px 24px; will-change: transform;}
   @keyframes counterSpinLogo { 100% { transform: rotate(-360deg) translateZ(0); } }
 
-  .data-stream { position:absolute;right:90px;top:44px;display:flex;flex-direction:column;gap:5px;opacity:.5; }
-  .data-stream-line { height:1.5px;background:linear-gradient(90deg,transparent,var(--accent-cyan));animation:streamIn 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; will-change: transform, opacity; }
+  .data-stream { position:absolute;right:90px;top:44px;display:flex;flex-direction:column;gap:5px;opacity:.6; }
+  .data-stream-line { height:1.5px;background:linear-gradient(90deg,transparent,var(--c-blue));animation:streamIn 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; will-change: transform, opacity; }
   .data-stream-line:nth-child(1){width:45px;animation-delay:0s} .data-stream-line:nth-child(2){width:28px;animation-delay:.3s} .data-stream-line:nth-child(3){width:38px;animation-delay:.6s}
   @keyframes streamIn { 0%,100%{opacity:.1;transform:scaleX(.4) translateZ(0); transform-origin: right;} 50%{opacity:1;transform:scaleX(1) translateZ(0); transform-origin: right;} }
   
   .company-name-cn { 
-    font-size:25px;font-weight:700;letter-spacing:.1em;
-    background: linear-gradient(135deg, #ffffff 0%, #b3e5fc 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    text-shadow: 0 4px 20px rgba(0,229,255,.3), 0 0 40px rgba(26,115,232,.4); 
+    font-size:25px;font-weight:700;letter-spacing:.1em; color: var(--text-primary);
   }
-  .company-name-en { font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:600;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-top:10px; opacity: 0.9;}
+  .company-name-en { font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:600;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-top:10px;}
   @media (min-width: 380px) { .company-name-cn { font-size:28px; } .company-name-en { font-size:12px; } }
 
-  .tagline { margin-top:24px;padding:16px 20px;background: linear-gradient(90deg, rgba(0,229,255,0.05) 0%, transparent 100%); border-left:3px solid var(--accent-cyan);border-radius:0 6px 6px 0; cursor:pointer; transition:all .3s ease; position: relative; overflow: hidden; transform: translateZ(0); }
-  .tagline::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); transition: left 0.5s ease; }
-  .tagline:hover::before { left:100%; }
-  .tagline:hover { background: linear-gradient(90deg, rgba(0,229,255,0.1) 0%, rgba(0,229,255,0.02) 100%); border-left-color:#fff; box-shadow: inset 0 0 20px rgba(0,229,255,.05); transform: translateX(6px) translateZ(0); }
-  .tagline-text { font-size:13.5px;color:var(--text-secondary);letter-spacing:.1em;line-height:1.9; font-weight: 400;}
-  .click-hint { display:inline-flex;align-items:center;gap:8px;margin-top:12px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--accent-cyan);opacity:.6;letter-spacing:.25em;transition:all .3s ease; }
-  .tagline:hover .click-hint { opacity:1; color: #fff; text-shadow: 0 0 12px var(--accent-cyan); letter-spacing: .3em; }
-  .click-hint::before { content:'►';font-size:9px; }
+  .tagline { margin-top:24px;padding:18px 22px;background: #f8fafc; border-left:3px solid var(--c-blue);border-radius:0 8px 8px 0; cursor:pointer; transition:all .3s ease; position: relative; overflow: hidden; transform: translateZ(0); }
+  .tagline:hover { background: var(--c-blue-light); transform: translateX(4px) translateZ(0); box-shadow: 0 4px 12px rgba(26,115,232,0.05); }
+  .tagline-text { font-size:13.5px;color:var(--text-secondary);letter-spacing:.1em;line-height:1.9; font-weight: 500;}
+  
+  .profile-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    margin-top: 16px; padding: 10px 22px; background: var(--c-blue); color: #fff;
+    border-radius: 24px; font-size: 13px; font-weight: 600; letter-spacing: 0.1em;
+    box-shadow: 0 4px 12px rgba(26,115,232,0.25); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .tagline:hover .profile-btn { background: #1557b0; box-shadow: 0 6px 16px rgba(26,115,232,0.4); transform: translateX(4px); }
+  .profile-btn-icon { font-size: 16px; transition: transform 0.3s; }
+  .tagline:hover .profile-btn-icon { transform: translateX(3px); }
  
-  .stats-row { display:flex;border-bottom:1px solid var(--border-dim); background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.05) 100%); }
-  .stat-item { flex:1;padding:26px 10px;border-right:1px solid var(--border-dim);text-align:center; position: relative; overflow: hidden; transition: background 0.3s;}
+  .stats-row { display:flex;border-bottom:1px solid var(--modal-border); background: #f8fafc; }
+  .stat-item { flex:1;padding:26px 10px;border-right:1px solid var(--modal-border);text-align:center; position: relative; overflow: hidden; transition: background 0.3s;}
   .stat-item:last-child{border-right:none}
-  .stat-item:hover { background: rgba(0,229,255,0.02); }
-  .stat-item::before { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; height: 3px; background: var(--accent-cyan); transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 15px var(--accent-cyan); }
+  .stat-item:hover { background: var(--c-blue-light); }
+  .stat-item::before { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; height: 3px; background: var(--c-blue); transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
   .stat-item:hover::before { width: 50%; }
-  .stat-value { font-family:'Rajdhani',sans-serif;font-size:34px;font-weight:700;color:var(--text-primary);text-shadow: 0 0 20px rgba(0,229,255,.5), 0 0 10px rgba(255,255,255,.2);letter-spacing:.05em; }
+  .stat-value { font-family:'Rajdhani',sans-serif;font-size:34px;font-weight:700;color:var(--c-blue);letter-spacing:.05em; }
   .stat-label { font-size:11px;color:var(--text-muted);margin-top:8px;letter-spacing:.15em; text-transform: uppercase; font-weight: 600;}
  
   .reveal-section { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -146,131 +164,103 @@
   .section, .industries-section, .values-section { padding:32px 36px; position: relative; }
   .section::after, .industries-section::after, .values-section::after {
     content:''; position: absolute; bottom: 0; left: 8%; right: 8%; height: 1px;
-    background: linear-gradient(90deg, transparent, var(--border-dim), transparent);
+    background: linear-gradient(90deg, transparent, var(--modal-border), transparent);
   }
   
-  .section-title { font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--accent-cyan);letter-spacing:.3em;text-transform:uppercase;margin-bottom:26px;display:flex;align-items:center;gap:14px; text-shadow: 0 0 10px rgba(0,229,255,0.3); }
-  .section-title::before { content:''; width: 6px; height: 6px; background: var(--accent-cyan); border-radius: 50%; box-shadow: 0 0 10px var(--accent-cyan); }
-  .section-title::after { content:'';flex:1;height:1px;background:linear-gradient(90deg, rgba(0,229,255,0.2), transparent); }
+  .section-title { font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--c-blue);letter-spacing:.3em;text-transform:uppercase;margin-bottom:26px;display:flex;align-items:center;gap:14px; font-weight:700;}
+  .section-title::before { content:''; width: 6px; height: 6px; background: var(--c-blue); border-radius: 50%; }
+  .section-title::after { content:'';flex:1;height:1px;background:linear-gradient(90deg, var(--modal-border), transparent); }
  
   .products-grid { display:grid;grid-template-columns:1fr 1fr;gap:18px; }
+  .product-card.full-width { grid-column: 1 / -1; }
+  
   .product-card {
-    background: linear-gradient(145deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.3) 100%);
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), 0 4px 15px rgba(0,0,0,0.2); 
+    background: #ffffff; border: 1px solid var(--modal-border); 
     border-radius: 8px; padding: 22px 18px; position: relative; overflow: hidden;
-    cursor: pointer; transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275); user-select: none;
-    transform: translateZ(0); 
-  }
-  .product-card::before {
-    content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0;
-    background: radial-gradient(circle 120px at var(--mx, 50%) var(--my, 50%), rgba(0,229,255,0.15) 0%, transparent 100%);
-    transition: opacity 0.4s ease;
+    cursor: pointer; transition: all .3s ease; user-select: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02); transform: translateZ(0); 
   }
   .product-card:active { transform:scale(0.96) translateZ(0); }
   .product-card:hover { 
-    background: linear-gradient(145deg, rgba(0,229,255,0.04) 0%, rgba(0,0,0,0.5) 100%);
-    box-shadow: inset 0 0 0 1px rgba(0,229,255,0.3), 0 15px 35px rgba(0,0,0,0.6), 0 0 25px rgba(0,229,255,0.1); 
-    transform: translateY(-6px) translateZ(0); 
+    border-color: var(--c-blue); box-shadow: 0 10px 25px rgba(26,115,232,0.1); 
+    transform: translateY(-4px) translateZ(0); 
   }
-  .product-card:hover::before { opacity: 1; }
-  
-  .product-icon { font-size:28px;margin-bottom:14px;display:inline-block; text-shadow: 0 0 12px rgba(0,229,255,0.4); animation: iconFloat 4s ease-in-out infinite alternate; transition: transform 0.3s; will-change: transform; }
-  @keyframes iconFloat { from { transform: translateY(0) translateZ(0); } to { transform: translateY(-5px) translateZ(0); } }
-  .product-card:hover .product-icon { transform: scale(1.15) translateZ(0) !important; animation-play-state: paused; text-shadow: 0 0 20px rgba(0,229,255,0.7); }
-  
-  .product-name { font-size:15px;font-weight:700;color:var(--text-primary);letter-spacing:.08em;line-height:1.4; text-shadow: 0 0 15px rgba(0,229,255,0.2);}
-  .product-sub { font-size:11.5px;color:var(--text-secondary);margin-top:8px;letter-spacing:.06em; opacity: 0.8; }
-  .product-card:hover .click-hint { opacity:1; color: var(--accent-cyan); }
+  .product-icon { font-size:28px;margin-bottom:14px;display:inline-block; transition: transform 0.3s; will-change: transform; }
+  .product-card:hover .product-icon { transform: scale(1.15) translateY(-2px) translateZ(0) !important; }
+  .product-name { font-size:15px;font-weight:700;color:var(--text-primary);letter-spacing:.08em;line-height:1.4;}
+  .product-sub { font-size:11.5px;color:var(--text-secondary);margin-top:8px;letter-spacing:.06em; opacity: 0.9; }
+  .click-hint { font-size: 11px; color: var(--c-blue); font-family: 'Share Tech Mono', monospace; font-weight: 600; opacity: 0; transition: opacity .2s; margin-top: 10px; display: inline-block;}
+  .product-card:hover .click-hint { opacity:1; }
  
   .tags-wrap { display:flex;flex-wrap:wrap;gap:12px; }
-  .tag { font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--text-secondary);background:rgba(0,0,0,0.3);box-shadow: inset 0 0 0 1px var(--border-dim);border-radius:4px;padding:6px 16px;letter-spacing:.15em;transition:all .3s ease; }
-  .tag:hover { background:rgba(0,229,255,.1);color:#fff;box-shadow: inset 0 0 0 1px var(--accent-cyan), 0 0 15px rgba(0,229,255,.2); transform: translateY(-2px) scale(1.02); }
+  .tag { font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--text-secondary);background:#f8fafc;border: 1px solid var(--modal-border);border-radius:4px;padding:6px 16px;letter-spacing:.15em;transition:all .3s ease; }
+  .tag:hover { background:var(--c-blue);color:#fff;border-color:var(--c-blue); transform: translateY(-2px) scale(1.02); }
  
   .value-items { display:flex;flex-direction:column;gap:16px; }
   .value-item { display:flex;align-items:center;gap:16px; }
-  .value-line { width:45px;height:2px;background:linear-gradient(90deg,var(--accent-cyan),transparent);flex-shrink:0; box-shadow: 0 0 12px var(--accent-cyan); position: relative;}
-  .value-line::before { content:''; position:absolute; left:0; top:-2px; width:6px; height:6px; background:#fff; border-radius:50%; box-shadow:0 0 10px #fff; }
-  .value-text { font-size:15px;color:var(--text-primary);letter-spacing:.12em; font-weight: 500; text-shadow: 0 0 10px rgba(255,255,255,0.15);}
+  .value-line { width:45px;height:2px;background:linear-gradient(90deg,var(--c-blue),transparent);flex-shrink:0; position: relative;}
+  .value-line::before { content:''; position:absolute; left:0; top:-2px; width:6px; height:6px; background:var(--c-blue); border-radius:50%; }
+  .value-text { font-size:15px;color:var(--text-primary);letter-spacing:.12em; font-weight: 600; }
 
   .contact-section::after { display: none; }
   .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .contact-btn {
     display: flex; align-items: center; justify-content: center; gap: 10px;
-    padding: 16px 12px; 
-    background: rgba(255,255,255,0.01); 
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+    padding: 16px 12px; background: #ffffff; border: 1px solid var(--modal-border);
     border-radius: 6px; color: var(--text-primary); text-decoration: none;
     font-size: 13.5px; font-weight: 500; letter-spacing: 0.12em;
-    transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative; overflow: hidden; transform: translateZ(0); 
+    transition: all .3s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.01); transform: translateZ(0); 
   }
-  .contact-btn::before {
-    content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0,229,255,0.2), transparent);
-    transition: left 0.6s ease;
-  }
-  .contact-btn:hover::before { left: 100%; }
   .contact-btn:hover, .contact-btn:active { 
-    background: linear-gradient(135deg, rgba(0,229,255,.1) 0%, rgba(26,115,232,.25) 100%); 
-    box-shadow: inset 0 0 0 1px var(--accent-cyan), 0 8px 25px rgba(0,0,0,0.5), 0 0 20px rgba(0,229,255,.2);
-    transform: translateY(-3px) translateZ(0); color: #fff;
+    background: var(--c-blue); border-color: var(--c-blue); color: #fff;
+    box-shadow: 0 8px 20px rgba(26,115,232,0.2); transform: translateY(-3px) translateZ(0); 
   }
-  .contact-icon { font-size: 18px; text-shadow: 0 0 10px rgba(0,229,255,0.6);}
+  .contact-icon { font-size: 18px; }
  
-  .card-footer { padding:28px 36px;display:flex;align-items:center;justify-content:space-between; border-top: 1px solid var(--border-dim); background: rgba(0,0,0,0.3); border-radius: 0 0 12px 12px; }
+  .card-footer { padding:28px 36px;display:flex;align-items:center;justify-content:space-between; border-top: 1px solid var(--modal-border); background: #f8fafc; border-radius: 0 0 16px 16px; }
   .footer-info { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text-muted);letter-spacing:.18em; line-height: 1.8;}
-  .footer-info span { color:var(--accent-cyan);opacity:1; font-weight: bold; text-shadow: 0 0 8px rgba(0,229,255,0.3);}
+  .footer-info span { color:var(--c-blue); font-weight: bold; }
   .established { display:flex;align-items:center;gap:12px; }
-  .est-bar { width:50px;height:2px;background:linear-gradient(90deg,transparent,var(--accent-cyan)); box-shadow: 0 0 10px rgba(0,229,255,.5); }
+  .est-bar { width:50px;height:2px;background:linear-gradient(90deg,transparent,var(--c-blue)); }
   .est-text { font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:var(--text-muted);letter-spacing:.25em; text-transform: uppercase;}
  
-  /* ── MODAL ── */
+  /* ── 弹窗 MODAL ── */
   .modal-overlay {
-    position:fixed;inset:0;z-index:200;
-    display:flex;align-items:center;justify-content:center;
-    background:rgba(2, 4, 10, 0.88); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+    position:fixed;inset:0;z-index:200; display:flex;align-items:center;justify-content:center;
+    background:rgba(15, 23, 42, 0.6); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
     opacity:0;pointer-events:none;transition:opacity .4s ease;
     padding: 20px; transform: translateZ(0);
   }
   .modal-overlay.active { opacity:1;pointer-events:all; }
   .modal {
     position:relative; width:100%; max-width:680px; max-height:88vh; 
-    background: rgba(6, 12, 24, 0.9);
-    border: 1px solid var(--glass-border); border-radius: 12px;
-    overflow:hidden;display:flex;flex-direction:column;
-    box-shadow: 0 40px 100px rgba(0,0,0,1), 0 0 0 1px rgba(255,255,255,0.03), inset 0 1px 1px rgba(255,255,255,0.1), inset 0 0 60px rgba(0,229,255,0.03);
-    transform:translateY(40px) scale(0.94) translateZ(0); 
-    transition:transform .6s cubic-bezier(0.2, 0.8, 0.2, 1);
-    will-change: transform;
+    background: var(--modal-bg); border: none; border-radius: 12px;
+    overflow:hidden;display:flex;flex-direction:column; box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+    transform:translateY(40px) scale(0.96) translateZ(0); 
+    transition:transform .5s cubic-bezier(0.2, 0.8, 0.2, 1); will-change: transform;
   }
   .modal-overlay.active .modal { transform:none; }
   
-  .modal-corner { position:absolute;width:24px;height:24px;z-index:10; }
-  .modal-corner::before,.modal-corner::after { content:'';position:absolute;background:var(--accent-cyan); box-shadow: 0 0 12px var(--accent-cyan);}
-  .modal-corner::before { width:100%;height:1.5px;top:0; } .modal-corner::after { width:1.5px;height:100%;top:0; }
-  .modal-corner-tl{top:0;left:0} .modal-corner-tr{top:0;right:0;transform:scaleX(-1)} .modal-corner-bl{bottom:0;left:0;transform:scaleY(-1)} .modal-corner-br{bottom:0;right:0;transform:scale(-1)}
- 
-  .modal-header { padding:34px 36px 26px; border-bottom:1px solid rgba(255,255,255,0.05);flex-shrink:0;position:relative; background: radial-gradient(circle at 50% 100%, rgba(0,229,255,0.05), transparent); }
-  .modal-label { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--accent-cyan);letter-spacing:.35em;text-transform:uppercase;margin-bottom:14px; padding-right: 45px; text-shadow: 0 0 8px rgba(0,229,255,0.4);}
-  .modal-title { font-size:25px;font-weight:700;color:var(--text-primary);letter-spacing:.08em;line-height:1.4;text-shadow:0 0 25px rgba(0,229,255,.3); padding-right: 45px; }
-  .modal-sub { font-size:13.5px;color:var(--text-secondary);margin-top:10px;letter-spacing:.08em;line-height:1.7; opacity: 0.9;}
+  .modal-header { padding:34px 36px 26px; border-bottom:none;flex-shrink:0;position:relative; background: linear-gradient(135deg, #0052cc 0%, #1a73e8 100%); color: #fff; }
+  .modal-label { font-family:'Share Tech Mono',monospace;font-size:11px;color:rgba(255,255,255,0.8);letter-spacing:.35em;text-transform:uppercase;margin-bottom:14px; padding-right: 45px;}
+  .modal-title { font-size:25px;font-weight:700;color:#fff;letter-spacing:.08em;line-height:1.4; padding-right: 45px; }
+  .modal-sub { font-size:13.5px;color:rgba(255,255,255,0.9);margin-top:10px;letter-spacing:.08em;line-height:1.7;}
   
   .modal-close { 
     position:absolute;top:34px;right:34px; width:42px;height:42px; 
-    border-radius:6px;background:rgba(255,255,255,0.03);box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
-    color:var(--text-primary);font-size:20px;cursor:pointer; display:flex;align-items:center;justify-content:center;transition:all .3s ease;font-family:'Share Tech Mono',monospace; 
+    border-radius:50%;background:rgba(255,255,255,0.15); border: none;
+    color:#fff;font-size:20px;cursor:pointer; display:flex;align-items:center;justify-content:center;transition:all .3s ease;font-family:'Share Tech Mono',monospace; 
   }
-  .modal-close:hover, .modal-close:active { background:rgba(0,229,255,.1);box-shadow: inset 0 0 0 1px var(--accent-cyan), 0 0 20px rgba(0,229,255,.3); transform: rotate(90deg); color: var(--accent-cyan); }
+  .modal-close:hover, .modal-close:active { background:#fff; color: var(--c-blue); transform: rotate(90deg); }
  
   .modal-body { 
     overflow-y:auto;flex:1;padding:34px 36px 45px; -webkit-overflow-scrolling: touch; 
-    scrollbar-width:thin;scrollbar-color:var(--accent-cyan) rgba(0,0,0,0.2); 
+    scrollbar-width:thin;scrollbar-color:var(--c-blue) rgba(0,0,0,0.05); 
   }
-  .modal-body::-webkit-scrollbar { width:4px; }
-  .modal-body::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
-  .modal-body::-webkit-scrollbar-thumb { background:var(--accent-cyan);border-radius:2px; box-shadow: 0 0 10px var(--accent-cyan); }
+  .modal-body::-webkit-scrollbar { width:6px; }
+  .modal-body::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
+  .modal-body::-webkit-scrollbar-thumb { background:#cbd5e1;border-radius:3px; }
  
-  /* --- 升级：弹窗内部的启动入场动画 --- */
   @keyframes blockFadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -279,127 +269,132 @@
     opacity: 0; animation: blockFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .modal-overlay.active .content-intro { animation-delay: 0.1s; }
-  .modal-overlay.active .content-block:nth-child(2) { animation-delay: 0.2s; }
-  .modal-overlay.active .content-block:nth-child(3) { animation-delay: 0.3s; }
-  .modal-overlay.active .content-block:nth-child(4) { animation-delay: 0.4s; }
-  .modal-overlay.active .content-block:nth-child(5) { animation-delay: 0.5s; }
+  .modal-overlay.active .content-block:nth-child(2) { animation-delay: 0.15s; }
+  .modal-overlay.active .content-block:nth-child(3) { animation-delay: 0.2s; }
+  .modal-overlay.active .content-block:nth-child(4) { animation-delay: 0.25s; }
+  .modal-overlay.active .content-block:nth-child(5) { animation-delay: 0.3s; }
 
-  /* --- 升级：折角玻璃风格概述块 --- */
   .content-intro {
-    font-size:14.5px;color:var(--text-secondary);line-height:2.1;letter-spacing:.08em;
-    margin-bottom:36px;padding:24px 28px;
-    background: linear-gradient(135deg, rgba(0,229,255,0.08) 0%, rgba(26,115,232,0.02) 100%);
-    border: 1px solid rgba(0,229,255,0.15); border-left: 4px solid var(--accent-cyan);
-    border-radius: 4px; box-shadow: inset 0 0 30px rgba(0,229,255,0.02), 0 8px 20px rgba(0,0,0,0.3);
-    position: relative;
+    font-size:14.5px;color:var(--modal-text-sub);line-height:2.1;letter-spacing:.08em;
+    margin-bottom:36px;padding:24px 28px; background: #ffffff;
+    border: 1px solid var(--modal-border); border-left: 4px solid var(--c-blue);
+    border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.02);
   }
-  /* 科技折角效果 */
-  .content-intro::after {
-    content: ''; position: absolute; top: -1px; right: -1px; border-style: solid;
-    border-width: 0 20px 20px 0; border-color: transparent var(--bg-deep) transparent transparent;
-  }
-  .content-intro strong { color:var(--text-primary);font-weight:700; text-shadow: 0 0 15px rgba(0,229,255,0.3);}
+  .content-intro strong { color:var(--modal-text);font-weight:700; }
  
   .content-block { margin-bottom:36px; }
-  
-  /* --- 升级：带渐变与引导线的标题 --- */
   .content-block-title {
-    font-family:'Share Tech Mono',monospace;font-size:14.5px;color:#fff;
-    letter-spacing:.2em;text-transform:uppercase;margin-bottom:24px;
-    display:flex;align-items:center;gap:12px; text-shadow: 0 0 10px rgba(0,229,255,0.5);
-    background: linear-gradient(90deg, rgba(0,229,255,0.15) 0%, transparent 100%);
-    padding: 8px 16px; border-left: 3px solid var(--accent-cyan); border-radius: 2px;
+    font-family:'Share Tech Mono',monospace;font-size:15px;color:var(--c-blue);font-weight:700;
+    letter-spacing:.15em;margin-bottom:20px; display:flex;align-items:center;gap:12px;
+    background: linear-gradient(90deg, rgba(26,115,232,0.08) 0%, transparent 100%);
+    padding: 10px 16px; border-left: 4px solid var(--c-blue); border-radius: 4px;
   }
-  .content-block-title::after { content:'';flex:1;height:1px;background:linear-gradient(90deg, rgba(0,229,255,0.3), transparent); }
+  .content-block-title::after { content:'';flex:1;height:1px;background:linear-gradient(90deg, var(--modal-border), transparent); }
  
-  .chip-wrap { display:flex;flex-wrap:wrap;gap:12px; }
-  /* 常规数据标签 */
-  .chip { 
-    font-size:13px;color:var(--text-secondary);background:rgba(0,0,0,0.4); 
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);border-radius:4px;padding:8px 16px;
-    letter-spacing:.08em;transition:all .3s; display: inline-flex; align-items: center; gap: 8px;
-  }
-  .chip::before { content:''; width:5px; height:5px; background:rgba(255,255,255,0.4); border-radius:50%; transition:all .3s;}
-  .chip:hover { box-shadow: inset 0 0 0 1px var(--accent-cyan), 0 0 20px rgba(0,229,255,0.15);color:var(--text-primary); background: rgba(0,229,255,0.05); transform: translateY(-2px);}
-  .chip:hover::before { background: var(--accent-cyan); box-shadow: 0 0 8px var(--accent-cyan); }
-  
-  /* --- 升级：场景与行业的专属“科技蓝”标签 --- */
-  .blue-style .chip-accent { 
-    font-family:'Share Tech Mono',monospace;font-size:12.5px;color:#a8c7fa; 
-    background:rgba(26,115,232,0.15);box-shadow: inset 0 0 0 1px rgba(26,115,232,0.4); 
-    border-radius:4px;padding:8px 16px;letter-spacing:.12em; font-weight: 700; transition: all .3s;
-  }
-  .blue-style .chip-accent:hover {
-    background:rgba(26,115,232,0.25); box-shadow: inset 0 0 0 1px #4285f4, 0 0 20px rgba(26,115,232,0.3); color: #fff; transform: translateY(-2px);
-  }
+  /* --- 高级排版组件 --- */
+  /* 流程图组件 */
+  .flow-container { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 20px 0; flex-wrap: wrap; }
+  .flow-step { background: var(--c-blue); color: #fff; padding: 8px 22px; border-radius: 6px; font-weight: 600; font-size: 14.5px; box-shadow: 0 4px 10px rgba(26,115,232,0.2); letter-spacing: 0.1em; transition: transform 0.3s; }
+  .flow-step:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(26,115,232,0.3); }
+  .flow-arrow { color: var(--c-blue); font-weight: bold; font-size: 18px; }
 
-  /* --- 升级：故障与隐患的专属“警报红”标签 --- */
-  .warn-style .chip {
-    color: #ffb3b3; background: rgba(255, 60, 60, 0.05); box-shadow: inset 0 0 0 1px rgba(255, 60, 60, 0.2);
+  /* 标签体系 */
+  .chip-wrap { display:flex;flex-wrap:wrap;gap:12px; }
+  .chip { 
+    font-size:13.5px;color:var(--modal-text-sub);background:#fff; 
+    border: 1px solid var(--modal-border); border-radius:6px;padding:8px 16px;
+    letter-spacing:.08em;transition:all .3s; display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
   }
-  .warn-style .chip::before { background: rgba(255, 60, 60, 0.5); }
-  .warn-style .chip:hover {
-    box-shadow: inset 0 0 0 1px #ff4d4d, 0 0 20px rgba(255, 60, 60, 0.2); color: #fff; background: rgba(255, 60, 60, 0.1);
+  .chip:hover { border-color:var(--c-blue);color:var(--c-blue); background: #f8fafc; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.05);}
+  
+  .orange-style .chip, .orange-style .chip-accent { 
+    font-size:13px; color:#c05621; background:#fffaf0; border: 1px solid #feebc8; 
+    border-radius:6px;padding:8px 16px;letter-spacing:.1em; font-weight: 600; transition: all .3s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
   }
-  .warn-style .chip:hover::before { background: #ff4d4d; box-shadow: 0 0 8px #ff4d4d; }
+  .orange-style .chip:hover, .orange-style .chip-accent:hover { background:#feebc8; border-color: #fbd38d; color: #9c4221; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(221,107,32,0.1); }
+
+  .warn-style .chip { color: #c53030; background: #fff5f5; border: 1px solid #fed7d7; }
+  .warn-style .chip:hover { border-color: #fc8181; color: #9b2c2c; background: #fed7d7; box-shadow: 0 4px 10px rgba(229,62,62,0.1); }
+  
+  .green-list .chip-accent { 
+    font-size:13px; color:var(--c-green); background:#ecfdf5; border: 1px solid #a7f3d0; 
+    border-radius:6px;padding:8px 16px;letter-spacing:.1em; font-weight: 600; transition: all .3s;
+  }
+  .green-list .chip-accent:hover { background:#d1fae5; border-color: #6ee7b7; color: #047857; transform: translateY(-2px); }
+
+  /* 列表卡片组件 */
+  .blue-list .feature-item { border-left-color: var(--c-blue); }
+  .blue-list .feature-item:hover { background: #eff6ff; border-color: #bfdbfe; border-left-color: var(--c-blue); }
+  .blue-list .feature-text strong { color: var(--c-blue); }
  
-  /* --- 升级：硬核 HUD 风格功能列表 --- */
-  .feature-list { display:flex;flex-direction:column;gap:16px; }
+  .green-list .feature-item { border-left-color: var(--c-green); }
+  .green-list .feature-item:hover { background: #ecfdf5; border-color: #a7f3d0; border-left-color: var(--c-green); }
+  .green-list .feature-text strong { color: var(--c-green); }
+
+  .feature-list { display:flex;flex-direction:column;gap:14px; }
   .feature-item { 
-    display:flex;align-items:flex-start;gap:16px;padding:16px 20px;
-    background: linear-gradient(90deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.005) 100%);
-    border: 1px solid rgba(255,255,255,0.04); border-left: 3px solid rgba(0,229,255,0.3);
-    border-radius:4px;transition:all .3s ease; position: relative; overflow: hidden;
+    display:flex;align-items:flex-start;gap:16px;padding:18px 22px;
+    background: #fff; border: 1px solid var(--modal-border); border-left: 4px solid var(--c-blue);
+    border-radius:8px;transition:all .3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.03);
   }
-  .feature-item:hover { 
-    background: linear-gradient(90deg, rgba(0,229,255,0.08) 0%, transparent 100%); 
-    border-left: 3px solid var(--accent-cyan); border-top-color: rgba(0,229,255,0.1); border-bottom-color: rgba(0,229,255,0.1);
-    transform: translateX(6px); box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-  }
-  .feature-dot { 
-    width:16px;height:16px;flex-shrink:0;margin-top:5px;
-    background:transparent; border: 2px solid var(--accent-cyan); border-radius: 3px;
-    box-shadow:0 0 10px var(--accent-cyan); position: relative;
-  }
-  .feature-dot::after {
-    content:''; position:absolute; top:2px; left:2px; right:2px; bottom:2px;
-    background: var(--accent-cyan); opacity: 0.3; transition: opacity .3s;
-  }
-  .feature-item:hover .feature-dot::after { opacity: 1; box-shadow: 0 0 8px #fff; }
-  .feature-text { font-size:14.5px;color:var(--text-secondary);line-height:1.9;letter-spacing:.06em; }
-  .feature-text strong { color:var(--text-primary);font-weight:700; text-shadow: 0 0 10px rgba(255,255,255,0.2);}
+  .feature-item:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+  .feature-dot { display: none; } 
+  .feature-text { font-size:14.5px;color:var(--modal-text-sub);line-height:1.9;letter-spacing:.06em; }
+  .feature-text strong { color:var(--modal-text);font-weight:700; }
  
+  /* 价值卡片三列网格 */
+  .value-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px;}
+  @media (max-width: 500px) { .value-card-grid { grid-template-columns: 1fr; } }
+  .value-card { background: #f8fafc; border: 1px solid var(--modal-border); border-radius: 8px; padding: 22px 14px; text-align: center; transition: all 0.3s; box-shadow: 0 2px 6px rgba(0,0,0,0.02);}
+  .value-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(26,115,232,0.08); border-color: var(--c-blue); }
+  .value-card-icon { font-size: 32px; margin-bottom: 12px; display: block; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+  .value-card-title { font-size: 15px; font-weight: 700; color: var(--modal-text); margin-bottom: 8px; letter-spacing: 0.05em;}
+  .value-card-desc { font-size: 12.5px; color: var(--modal-text-sub); line-height: 1.6;}
+
+  /* 警告面板双列网格 */
   .two-col { display:grid;grid-template-columns:1fr 1fr;gap:18px; }
   @media (max-width: 450px) { .two-col { grid-template-columns: 1fr; } }
-
-  /* --- 升级：带有警示质感的高危设备监测面板 --- */
   .sub-block-warn { 
-    padding:22px; background: linear-gradient(180deg, rgba(255,60,60,0.05) 0%, rgba(0,0,0,0.3) 100%);
-    box-shadow: inset 0 2px 0 rgba(255,60,60,0.3), inset 0 0 0 1px rgba(255,255,255,0.03);
-    border-radius:6px; transition: all 0.3s;
+    padding:22px; background: #fff; border: 1px solid var(--modal-border);
+    border-top: 4px solid var(--c-red); border-radius:8px; transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
   }
-  .sub-block-warn:hover { 
-    background: linear-gradient(180deg, rgba(255,60,60,0.08) 0%, rgba(0,0,0,0.5) 100%);
-    box-shadow: inset 0 2px 0 #ff4d4d, inset 0 0 0 1px rgba(255,60,60,0.2);
-  }
+  .sub-block-warn:hover { background: #fff5f5; box-shadow: 0 8px 20px rgba(229,62,62,0.08); border-color: #fed7d7; }
   .sub-block-warn .sub-block-title { 
-    font-size:15.5px;font-weight:700;color:#ffb3b3;letter-spacing:.08em;margin-bottom:16px;padding-bottom:14px;
-    border-bottom:1px solid rgba(255,60,60,0.15); text-shadow: 0 0 15px rgba(255,60,60,0.4);
+    font-size:15.5px;font-weight:700;color:var(--c-red);letter-spacing:.08em;margin-bottom:16px;padding-bottom:14px; border-bottom:1px solid #fed7d7;
   }
   .sub-block-warn ul { list-style:none; }
-  .sub-block-warn ul li { font-size:13.5px;color:var(--text-secondary);letter-spacing:.06em;line-height:2.1;padding-left:20px;position:relative; margin-bottom: 8px;}
-  .sub-block-warn ul li::before { content:'■';position:absolute;left:0;color:#ff4d4d; font-weight: bold; font-size: 14px; top: 0px; text-shadow: 0 0 8px #ff4d4d;}
+  .sub-block-warn ul li { font-size:13.5px;color:var(--modal-text-sub);letter-spacing:.06em;line-height:2.1;padding-left:20px;position:relative; margin-bottom: 8px;}
+  .sub-block-warn ul li::before { content:'■';position:absolute;left:0;color:var(--c-red); font-size: 10px; top: 2px;}
+
+  /* 图标宫格矩阵 */
+  .icon-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (min-width: 480px) { .icon-card-grid { grid-template-columns: repeat(3, 1fr); } }
+  .icon-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 20px 12px; background: #fff; border: 1px solid var(--modal-border); border-radius: 8px; transition: all 0.3s; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.02);}
+  .icon-card:hover { border-color: var(--c-blue); box-shadow: 0 8px 20px rgba(26,115,232,0.1); transform: translateY(-4px); }
+  .icon-card .ic { font-size: 28px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+  .icon-card .txt { font-size: 13.5px; font-weight: 600; color: var(--modal-text); letter-spacing: 0.05em; line-height: 1.4; }
+
+  /* 序号核心卡片 */
+  .numbered-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 480px) { .numbered-grid { grid-template-columns: 1fr 1fr; } }
+  .numbered-card { display: flex; align-items: flex-start; gap: 16px; padding: 22px; background: #fff; border: 1px solid var(--modal-border); border-radius: 8px; transition: all 0.3s; box-shadow: 0 2px 6px rgba(0,0,0,0.02);}
+  .numbered-card:hover { border-color: var(--c-green); box-shadow: 0 8px 20px rgba(5,150,105,0.1); transform: translateY(-3px); }
+  .num-badge { width: 32px; height: 32px; border-radius: 50%; background: var(--c-green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; flex-shrink: 0; box-shadow: 0 4px 10px rgba(5,150,105,0.3); font-family: 'Share Tech Mono', monospace; }
+  .num-content { display: flex; flex-direction: column; gap: 6px; }
+  .num-title { font-size: 15px; font-weight: 700; color: var(--modal-text); letter-spacing: 0.05em;}
+  .num-desc { font-size: 13px; color: var(--modal-text-sub); line-height: 1.7; letter-spacing: 0.04em;}
  
-  .note { margin-top:20px;font-size:13.5px;color:var(--text-muted);letter-spacing:.08em;font-style:italic; border-left: 2px solid var(--text-muted); padding-left: 14px;}
+  .note { margin-top:20px;font-size:13.5px;color:#718096;letter-spacing:.08em;font-style:italic; border-left: 3px solid #cbd5e1; padding-left: 14px; background: #f8fafc; padding: 12px 16px; border-radius: 4px;}
 </style>
 </head>
 <body>
-<!-- 新增：Noise 噪点层 -->
 <div class="noise-overlay"></div>
 <div class="glow-orb glow-orb-1"></div>
 <div class="glow-orb glow-orb-2"></div>
  
-<!-- MAIN CARD (增加了 3D 盒子支持) -->
 <div class="card-perspective">
 <div class="card" id="mainCard">
   <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
@@ -409,54 +404,58 @@
     <div class="header-badge"><div class="badge-dot"></div><span class="badge-text">Industrial IoT · Smart Monitoring</span></div>
     <div class="logo-mark">
       <svg class="hex-svg" viewBox="0 0 40 40" fill="none">
-        <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" stroke="rgba(0,229,255,0.6)" stroke-width="1.5" fill="rgba(0,229,255,0.08)"/>
-        <polygon points="20,7 31,13.5 31,26.5 20,33 9,26.5 9,13.5" stroke="rgba(0,229,255,0.4)" stroke-width="0.5" fill="none"/>
+        <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" stroke="var(--c-blue)" stroke-width="1.5" fill="rgba(26,115,232,0.1)"/>
+        <polygon points="20,7 31,13.5 31,26.5 20,33 9,26.5 9,13.5" stroke="var(--c-blue)" stroke-width="0.5" fill="none"/>
         <text x="20" y="24" text-anchor="middle" class="hex-inner">NS</text>
       </svg>
     </div>
     <div class="data-stream"><div class="data-stream-line"></div><div class="data-stream-line"></div><div class="data-stream-line"></div></div>
     <div class="company-name-cn">上海牛苏科技有限公司</div>
     <div class="company-name-en">Shanghai Niusu Technology Co., Ltd.</div>
-    <div class="tagline" onclick="openModal('intro')">
-      <div class="tagline-text">国内唯一专注于系列智慧监测技术研发与智慧运维服务的创新型科技企业</div>
-      <div class="click-hint">查看公司简介</div>
+    <div class="tagline">
+      <div class="tagline-text">国内唯一专注于系列智慧监测技术研发<br>与智慧运维服务的创新型科技企业</div>
+      <div class="profile-btn" onclick="openModal('intro')">查看公司简介 <span class="profile-btn-icon">➔</span></div>
     </div>
   </div>
  
   <div class="stats-row">
-    <!-- 优化：增加了计数器 counter-num 类 -->
     <div class="stat-item"><div class="stat-value counter-num" data-target="2015">0</div><div class="stat-label">创立年份</div></div>
-    <div class="stat-item"><div class="stat-value"><span class="counter-num" data-target="10">0</span><span style="font-size:16px;color:var(--text-secondary)">+</span></div><div class="stat-label">行业覆盖</div></div>
+    <div class="stat-item"><div class="stat-value"><span class="counter-num" data-target="10">0</span><span style="font-size:16px;color:var(--c-blue)">+</span></div><div class="stat-label">行业覆盖</div></div>
     <div class="stat-item"><div class="stat-value">24/7</div><div class="stat-label">在线监测</div></div>
   </div>
  
-  <!-- 优化：加入滚动激活 reveal-section 类 -->
   <div class="section reveal-section">
-    <div class="section-title">核心产品体系 <span style="font-size:11px;color:rgba(0,229,255,.6);letter-spacing:.05em;text-transform:none;font-family:'Noto Sans SC',sans-serif;">点击查看详情</span></div>
+    <div class="section-title">核心产品体系</div>
     <div class="products-grid">
       <div class="product-card" onclick="openModal('dong')">
         <span class="product-icon">⚙️</span>
-        <div class="product-name">动设备智慧监测</div>
-        <div class="product-sub">让旋转机械“健康透明”</div>
-        <div class="click-hint">系统详情</div>
+        <div class="product-name">动设备监测系统</div>
+        <div class="product-sub">电机/泵/风机/压缩机</div>
+        <span class="click-hint">系统详情</span>
       </div>
       <div class="product-card" onclick="openModal('jing')">
         <span class="product-icon">🏭</span>
-        <div class="product-name">静设备智慧监测</div>
-        <div class="product-sub">攻克严苛工况的“监测堡垒”</div>
-        <div class="click-hint">系统详情</div>
+        <div class="product-name">静设备监测系统</div>
+        <div class="product-sub">压力容器/管道/储罐</div>
+        <span class="click-hint">系统详情</span>
       </div>
       <div class="product-card" onclick="openModal('dian')">
         <span class="product-icon">⚡</span>
-        <div class="product-name">配电房智慧监测</div>
-        <div class="product-sub">打造无人值守的“安心电管家”</div>
-        <div class="click-hint">系统详情</div>
+        <div class="product-name">配电房监测系统</div>
+        <div class="product-sub">高低压配电/用电安全</div>
+        <span class="click-hint">系统详情</span>
       </div>
       <div class="product-card" onclick="openModal('xiao')">
         <span class="product-icon">🔥</span>
-        <div class="product-name">消防泵房设施完整性智慧监测</div>
-        <div class="product-sub">确保生命通道“时刻待命”</div>
-        <div class="click-hint">系统详情</div>
+        <div class="product-name">消防泵房监测</div>
+        <div class="product-sub">设施完整性/合规管控</div>
+        <span class="click-hint">系统详情</span>
+      </div>
+      <div class="product-card full-width" onclick="openModal('nengyuan')">
+        <span class="product-icon">🔋</span>
+        <div class="product-name">智慧能源管理与节能优化系统</div>
+        <div class="product-sub">空压系统 / 余热回收 / 冷却水系统 / 多能耦合</div>
+        <span class="click-hint">系统详情</span>
       </div>
     </div>
   </div>
@@ -508,11 +507,8 @@
 </div>
 </div>
  
-<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
   <div class="modal" id="modal">
-    <div class="modal-corner modal-corner-tl"></div><div class="modal-corner modal-corner-tr"></div>
-    <div class="modal-corner modal-corner-bl"></div><div class="modal-corner modal-corner-br"></div>
     <div class="modal-header">
       <div class="modal-label" id="modalLabel"></div>
       <div class="modal-title" id="modalTitle"></div>
@@ -524,7 +520,6 @@
 </div>
  
 <script>
-// --- 数据区域（注入了色彩语义样式，内容依然完全保留） ---
 const products = {
   intro: {
     label: 'COMPANY PROFILE · SHANGHAI NIUSU TECHNOLOGY',
@@ -536,17 +531,22 @@ const products = {
       </div>
  
       <div class="content-block">
-        <div class="content-block-title">业务聚焦与服务体系</div>
-        <div class="feature-list">
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">聚焦<strong>动设备、静设备、配电房用电安全、消防泵房设施完整性</strong>四大核心智慧监测业务场景</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">构建 <strong>"咨询 — 研发 — 制造 — 运营"</strong> 全链条一体化服务体系，全面赋能数字化与智能化建设</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">引领<strong>无人化运维变革</strong>，为客户提供从现场感知、边缘计算到云平台分析的<strong>全栈式解决方案</strong></div></div>
+        <div class="content-block-title" style="justify-content: center;">全链条一体化服务体系</div>
+        <div class="flow-container">
+          <div class="flow-step">咨询</div><div class="flow-arrow">➔</div>
+          <div class="flow-step">研发</div><div class="flow-arrow">➔</div>
+          <div class="flow-step">制造</div><div class="flow-arrow">➔</div>
+          <div class="flow-step">运营</div>
+        </div>
+        <div class="feature-list blue-list" style="margin-top:20px;">
+          <div class="feature-item"><div class="feature-text">公司聚焦<strong>动设备、静设备、配电房用电安全、消防泵房设施完整性</strong>及<strong>智慧能源管理与节能优化</strong>五大核心业务场景。</div></div>
+          <div class="feature-item"><div class="feature-text">全面赋能数字化与智能化建设，引领<strong>无人化运维变革</strong>，为客户提供从现场感知、边缘计算到云平台分析的<strong>全栈式解决方案</strong>。</div></div>
         </div>
       </div>
  
       <div class="content-block">
         <div class="content-block-title">核心产品覆盖场景</div>
-        <div class="chip-wrap blue-style">
+        <div class="chip-wrap orange-style">
           <span class="chip-accent">矿山</span><span class="chip-accent">有色</span><span class="chip-accent">钢铁</span>
           <span class="chip-accent">石油</span><span class="chip-accent">化工</span><span class="chip-accent">电力</span>
           <span class="chip-accent">燃气</span><span class="chip-accent">公共建筑</span><span class="chip-accent">市政</span>
@@ -556,19 +556,19 @@ const products = {
  
       <div class="content-block">
         <div class="content-block-title">技术优势</div>
-        <div class="feature-list">
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>精准感知</strong>：多元传感技术融合，全维度采集设备运行数据</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>智能预警</strong>：自研 AI 诊断算法，提前识别隐患，有效破解设备检测与安全管理痛点</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>全域管控</strong>：云平台统一管理，<strong>对于提高设备安全可靠性，降低事故发生率、减少生命和财产损失，具有重要经济效益和社会效益</strong>，助力企业降本增效、筑牢安全生产防线</div></div>
+        <div class="feature-list green-list">
+          <div class="feature-item"><div class="feature-text"><strong>精准感知</strong>：多元传感技术融合，全维度采集设备运行数据</div></div>
+          <div class="feature-item"><div class="feature-text"><strong>智能预警</strong>：自研 AI 诊断算法，提前识别隐患，有效破解设备检测与安全管理痛点</div></div>
+          <div class="feature-item"><div class="feature-text"><strong>全域管控</strong>：云平台统一管理，对于提高设备安全可靠性，降低事故发生率、减少生命和财产损失，具有重要经济效益和社会效益，助力企业降本增效、筑牢安全生产防线。</div></div>
         </div>
       </div>
  
       <div class="content-block">
-        <div class="content-block-title">近期动态 · 2025 年以来</div>
-        <div class="feature-list">
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">先后与多家国内<strong>知名化工企业</strong>达成深度合作，落地一批<strong>数字化智能化标杆项目</strong></div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">积极支撑<strong>区域中小企业数字化转型试点建设</strong>，推动人工智能与先进制造业深度融合</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">以数智技术赋能产业升级，为<strong>数字化中国建设</strong>提供坚实支撑</div></div>
+        <div class="content-block-title" style="background: linear-gradient(90deg, rgba(221,107,32,0.1) 0%, transparent 100%); color: #dd6b20; border-left-color: #dd6b20;">2025 · 最新动态</div>
+        <div class="feature-list orange-style">
+          <div class="feature-item" style="border-left-color: #dd6b20;"><div class="feature-text">2025 年以来，公司先后与多家国内<strong>知名化工企业</strong>达成深度合作，落地一批<strong>数字化智能化标杆项目</strong></div></div>
+          <div class="feature-item" style="border-left-color: #dd6b20;"><div class="feature-text">积极支撑<strong>区域中小企业数字化转型试点建设</strong>，推动人工智能与先进制造业深度融合</div></div>
+          <div class="feature-item" style="border-left-color: #dd6b20;"><div class="feature-text">以数智技术赋能产业升级，为<strong>数字化中国建设</strong>提供坚实支撑</div></div>
         </div>
       </div>
     `
@@ -576,56 +576,120 @@ const products = {
   dong: {
     label: 'PRODUCT 01 · ROTATING EQUIPMENT MONITORING',
     title: '动设备智慧监测系统',
-    sub: '适用设备：电机、减速机、齿轮箱、空气压缩机、离心风机、冷却风机、机泵组合、各类泵体等工业旋转、传动类关键动设备',
+    sub: '适用设备：电机、减速机、齿轮箱、空气压缩机、离心风机、冷却风机、机泵组合、各类泵体等工业旋转设备',
     body: `
       <div class="content-intro">
-        本系统专为工业旋转、传动类关键动设备量身研发，以<strong>高精度振动传感</strong>、<strong>多点位温度采集</strong>为核心，深度融合边缘计算算力与自研 AI 智能诊断算法，搭建设备全生命周期健康管理模型，实现全天候<strong>预防性在线监测与智能运维</strong>。
+        本系统专为<strong>电机、减速机、齿轮箱、空气压缩机、离心风机、冷却风机、机泵组合、各类泵体</strong>等工业旋转、传动类关键动设备量身研发，以<strong>高精度振动传感、多点位温度采集</strong>为核心，深度融合边缘计算算力与自研 AI 智能诊断算法，搭建<strong>设备全生命周期健康管理模型</strong>，实现全天候预防性在线监测与智能运维。
       </div>
- 
+
       <div class="content-block">
-        <div class="content-block-title">技术核心</div>
-        <div class="feature-list">
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>高精度振动传感 + 多点位温度采集</strong>，实现设备状态全维度感知</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>边缘计算算力 + 自研 AI 智能诊断算法</strong>，现场实时分析，响应无延迟</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>海量工业故障样本库 + 大数据趋势分析</strong>，精准识别并预判故障模式</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">搭建<strong>设备全生命周期健康管理模型</strong>，持续评估健康状态与劣化趋势</div></div>
+        <div class="content-block-title">重点监测关键动设备</div>
+        <div class="icon-card-grid">
+          <div class="icon-card"><span class="ic">⚙️</span><span class="txt">电机 / 减速机</span></div>
+          <div class="icon-card"><span class="ic">📦</span><span class="txt">齿轮箱</span></div>
+          <div class="icon-card"><span class="ic">💨</span><span class="txt">空气压缩机</span></div>
+          <div class="icon-card"><span class="ic">🌀</span><span class="txt">各类风机</span></div>
+          <div class="icon-card"><span class="ic">💧</span><span class="txt">各类泵体</span></div>
+          <div class="icon-card"><span class="ic">🔗</span><span class="txt">传动类设备</span></div>
         </div>
       </div>
  
       <div class="content-block">
-        <div class="content-block-title">可精准识别的典型故障</div>
-        <div class="chip-wrap warn-style">
-          <span class="chip">不平衡与不对中</span>
-          <span class="chip">轴承磨损失效</span>
-          <span class="chip">齿轮断齿劣化</span>
-          <span class="chip">泵体气蚀堵塞</span>
-          <span class="chip">电机绕组过热</span>
-          <span class="chip">轴瓦活塞损坏</span>
-          <span class="chip">部件间隙过大</span>
-          <span class="chip">连接松动脱落</span>
+        <div class="content-block-title">精准识别与预判的典型故障</div>
+        <div class="two-col">
+          <div class="sub-block-warn">
+            <div class="sub-block-title">⚙️ 机械运转类故障</div>
+            <ul>
+              <li>转子不平衡与不对中</li>
+              <li>轴承磨损失效及游隙过大</li>
+              <li>齿轮断齿、点蚀与劣化</li>
+              <li>部件间隙过大、连接松动脱落</li>
+            </ul>
+          </div>
+          <div class="sub-block-warn">
+            <div class="sub-block-title">⚡ 流体与电气类故障</div>
+            <ul>
+              <li>泵体气蚀与流道堵塞</li>
+              <li>电机绕组过热与绝缘异常</li>
+              <li>轴瓦及活塞异常磨损损坏</li>
+              <li>润滑不良与温度异常升高</li>
+            </ul>
+          </div>
         </div>
       </div>
  
       <div class="content-block">
-        <div class="content-block-title">核心功能</div>
-        <div class="feature-list">
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>多级预警推送</strong>：按严重程度分级推送，及时通知运维人员</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>故障溯源定位</strong>：精准识别故障类型、部位与成因，辅助检修决策</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>健康状态评估</strong>：持续评分，掌握每台设备当前健康水平</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">大幅<strong>减少非计划停机时长</strong>，降低运维检修成本，延长设备服役周期</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">助力企业实现动设备<strong>智能化、无人化运维</strong></div></div>
+        <div class="content-block-title">核心技术与系统功能</div>
+        <div class="numbered-grid">
+          <div class="numbered-card">
+            <div class="num-badge">1</div>
+            <div class="num-content">
+              <div class="num-title">高精度多维感知</div>
+              <div class="num-desc">融合高精度振动传感与多点位温度采集，全维度提取设备运行数据。</div>
+            </div>
+          </div>
+          <div class="numbered-card">
+            <div class="num-badge">2</div>
+            <div class="num-content">
+              <div class="num-title">边缘计算与 AI 诊断</div>
+              <div class="num-desc">现场边缘算力融合自研 AI 算法，实现故障毫秒级无延迟响应。</div>
+            </div>
+          </div>
+          <div class="numbered-card">
+            <div class="num-badge">3</div>
+            <div class="num-content">
+              <div class="num-title">大数据趋势分析</div>
+              <div class="num-desc">依托海量工业故障样本库，持续评估设备健康状态与性能劣化趋势。</div>
+            </div>
+          </div>
+          <div class="numbered-card">
+            <div class="num-badge">4</div>
+            <div class="num-content">
+              <div class="num-title">多级预警智能推送</div>
+              <div class="num-desc">自动评估风险等级并分级通知，有效防范设备突发性宕机停产。</div>
+            </div>
+          </div>
+          <div class="numbered-card">
+            <div class="num-badge">5</div>
+            <div class="num-content">
+              <div class="num-title">故障溯源与精确定位</div>
+              <div class="num-desc">精准锁定故障类型、发生部位及成因，为检修决策提供科学依据。</div>
+            </div>
+          </div>
+          <div class="numbered-card">
+            <div class="num-badge">6</div>
+            <div class="num-content">
+              <div class="num-title">全生命周期健康管理</div>
+              <div class="num-desc">建立单体设备数字档案，形成防范、诊断、运维的全闭环管理机制。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <div class="value-card-grid">
+           <div class="value-card">
+              <span class="value-card-icon">📉</span>
+              <div class="value-card-title">减少停机</div>
+              <div class="value-card-desc">大幅减少非计划停机时长</div>
+           </div>
+           <div class="value-card">
+              <span class="value-card-icon">💰</span>
+              <div class="value-card-title">降低成本</div>
+              <div class="value-card-desc">降低运维检修成本</div>
+           </div>
+           <div class="value-card">
+              <span class="value-card-icon">⏳</span>
+              <div class="value-card-title">延长寿命</div>
+              <div class="value-card-desc">延长设备服役周期</div>
+           </div>
         </div>
       </div>
  
       <div class="content-block">
-        <div class="content-block-title">适用行业场景</div>
-        <div class="chip-wrap blue-style">
-          <span class="chip-accent">煤炭</span><span class="chip-accent">石化</span>
-          <span class="chip-accent">钢铁</span><span class="chip-accent">水泥</span>
-          <span class="chip-accent">电力</span><span class="chip-accent">港口</span>
-          <span class="chip-accent">医药</span><span class="chip-accent">食品</span>
-          <span class="chip-accent">化工园区</span>
-        </div>
+        <p class="note" style="border-left-color: #dd6b20; background: #fffaf0;">
+          <strong style="color: #dd6b20;">适用场景：</strong>广泛适用于煤炭、石化、钢铁、水泥、电力、港口、医药、食品、化工园区等场景，全面保障核心动设备长周期平稳、高效、可靠运行，助力企业实现动设备<strong>智能化、无人化运维</strong>。
+        </p>
       </div>
     `
   },
@@ -636,18 +700,18 @@ const products = {
     sub: '适用设备：导热油压力管道、压力容器、各类储罐、换热器、反应釜、塔器、锅炉等工业静置类关键设备及特种设备',
     body: `
       <div class="content-intro">
-        本系统整合<strong>分布式光纤传感、红外热成像、激光遥测、声学监测、多维度参数传感器</strong>等多元感知技术，搭配边缘计算与 AI 多源数据融合分析算法，攻克高温、高压、易燃易爆等严苛工况下的监测难题，实现<strong>全生命周期非接触式、不间断预防性在线监测</strong>，严格契合特种设备安全监管要求。
+        本系统专为<strong>导热油压力管道、压力容器、各类储罐、换热器、反应釜、塔器、锅炉</strong>等工业静置类关键设备及特种设备定向研发。针对高危设备的运行特性，整合多元感知技术，攻克高温、高压、易燃易爆等严苛工况下的监测难题，实现<strong>全生命周期非接触式、不间断预防性在线监测</strong>，严格契合特种设备安全监管要求。
       </div>
  
       <div class="content-block">
         <div class="content-block-title">多元感知技术体系</div>
-        <div class="chip-wrap">
-          <span class="chip">分布式光纤传感</span>
-          <span class="chip">红外热成像</span>
-          <span class="chip">激光遥测</span>
-          <span class="chip">声学监测</span>
-          <span class="chip">多维度参数传感器</span>
-          <span class="chip">AI 多源数据融合</span>
+        <div class="icon-card-grid">
+          <div class="icon-card"><span class="ic">🌐</span><span class="txt">分布式光纤传感</span></div>
+          <div class="icon-card"><span class="ic">🌡️</span><span class="txt">红外热成像</span></div>
+          <div class="icon-card"><span class="ic">📡</span><span class="txt">激光遥测</span></div>
+          <div class="icon-card"><span class="ic">🌊</span><span class="txt">声学监测</span></div>
+          <div class="icon-card"><span class="ic">🎛️</span><span class="txt">多参数传感器</span></div>
+          <div class="icon-card"><span class="ic">🧠</span><span class="txt">AI多源数据融合</span></div>
         </div>
       </div>
  
@@ -658,56 +722,40 @@ const products = {
             <div class="sub-block-title">🔩 压力管道</div>
             <ul>
               <li>管壁腐蚀减薄</li>
-              <li>焊缝开裂</li>
-              <li>弯头破损</li>
-              <li>介质泄漏</li>
-              <li>倾角位移</li>
-              <li>超压运行</li>
-              <li>密封失效</li>
+              <li>焊缝开裂、弯头破损</li>
+              <li>介质泄漏、密封失效</li>
+              <li>倾角位移、超压运行</li>
             </ul>
           </div>
           <div class="sub-block-warn">
             <div class="sub-block-title">🏺 压力容器</div>
             <ul>
-              <li>内壁腐蚀</li>
-              <li>应力异常</li>
-              <li>壁厚衰减</li>
-              <li>密封面渗漏</li>
-              <li>接口松动</li>
-              <li>超温超压</li>
+              <li>内壁腐蚀、壁厚衰减</li>
+              <li>应力异常、超温超压</li>
+              <li>密封面渗漏、接口松动</li>
               <li>安全附件失灵</li>
             </ul>
           </div>
         </div>
-        <div style="margin-top:18px" class="sub-block-warn">
+        <div style="margin-top:16px" class="sub-block-warn">
           <div class="sub-block-title">🛢️ 储罐 / 换热器等静设备</div>
-          <ul>
-            <li>跑冒滴漏、局部腐蚀、部件老化等问题全面覆盖</li>
-          </ul>
+          <p style="font-size:13.5px; color:var(--modal-text-sub); line-height:1.8;">同步覆盖跑冒滴漏、局部腐蚀、部件老化等问题，有效防范压力管道爆裂、压力容器泄漏爆炸等重特大安全事故。</p>
         </div>
       </div>
  
       <div class="content-block">
         <div class="content-block-title">系统核心能力</div>
-        <div class="feature-list">
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>隐患精准定位</strong>：多点位传感数据融合，快速锁定异常部位</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>风险自动分级</strong>：AI 评估模型自动输出风险等级，辅助决策</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>趋势预判推演</strong>：提前预测劣化趋势，争取处置窗口期</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>隐患闭环管理</strong>：从发现、预警、处置到验收全流程闭环追踪</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>合规台账生成</strong>：自动生成特种设备安全监管合规文档，减少人工负担</div></div>
+        <div class="feature-list green-list">
+          <div class="feature-item"><div class="feature-text"><strong>隐患精准定位</strong>：多点位传感数据融合，快速锁定异常部位</div></div>
+          <div class="feature-item"><div class="feature-text"><strong>风险自动分级</strong>：AI 评估模型自动输出风险等级，辅助决策</div></div>
+          <div class="feature-item"><div class="feature-text"><strong>趋势预判推演</strong>：提前预测劣化趋势，争取处置窗口期</div></div>
+          <div class="feature-item"><div class="feature-text"><strong>隐患闭环管理</strong>：从发现、预警、处置到验收全流程闭环追踪</div></div>
+          <div class="feature-item"><div class="feature-text"><strong>合规台账生成</strong>：自动生成特种设备安全监管合规文档，减少人工负担</div></div>
         </div>
       </div>
  
       <div class="content-block">
-        <div class="content-block-title">适用行业场景</div>
-        <div class="chip-wrap blue-style">
-          <span class="chip-accent">煤炭</span><span class="chip-accent">石化</span>
-          <span class="chip-accent">钢铁</span><span class="chip-accent">水泥</span>
-          <span class="chip-accent">电力</span><span class="chip-accent">港口</span>
-          <span class="chip-accent">医药</span><span class="chip-accent">食品</span>
-          <span class="chip-accent">化工园区</span>
-        </div>
-        <p class="note">★ 尤其适配高温、高压、易燃易爆、有毒有害等复杂严苛工况</p>
+        <p class="note">★ 广泛适用于煤炭、石化、钢铁、水泥、电力等场景，尤其适配高温、高压、易燃易爆、有毒有害等复杂严苛工况</p>
       </div>
     `
   },
@@ -718,30 +766,20 @@ const products = {
     sub: '适用场景：各类高低压配电房、箱式变电站、临时配电设施、电缆等，支持不同规模配电房灵活部署与存量改造',
     body: `
       <div class="content-intro">
-        本系统采用<strong>模块化集成、即插即用</strong>设计，支持灵活扩容与存量设备改造，以<strong>多维度用电状态感知、环境安防监测</strong>为核心，搭配无线远程传输与数据加密存储技术，融合 AI 智能分析模型，实现配电房<strong>全生命周期预防性在线监测</strong>，兼顾监测精准度、数据安全性与运维便捷性。
+        本系统专为<strong>各类高低压配电房、箱式变电站、临时配电设施、电缆</strong>等场景研发，采用模块化集成、即插即用设计，支持灵活扩容与存量设备改造。以多维度用电状态感知、环境安防监测为核心，搭配无线远程传输与数据加密存储技术，融合 AI 智能分析模型，实现配电房<strong>全生命周期预防性在线监测</strong>，兼顾监测精准度、数据安全性与运维便捷性。
       </div>
  
       <div class="content-block">
-        <div class="content-block-title">用电安全监测</div>
+        <div class="content-block-title">用电安全监测与高发故障</div>
         <div class="chip-wrap warn-style">
           <span class="chip">线路过载短路</span>
           <span class="chip">漏电电弧</span>
           <span class="chip">接触不良发热</span>
           <span class="chip">局部放电</span>
-          <span class="chip">绝缘老化</span>
-          <span class="chip">接地电阻异常</span>
-          <span class="chip">电缆接头过热</span>
-        </div>
-      </div>
- 
-      <div class="content-block">
-        <div class="content-block-title">电缆高发故障监测</div>
-        <div class="chip-wrap warn-style">
-          <span class="chip">绝缘击穿</span>
-          <span class="chip">过载过热</span>
-          <span class="chip">断线断芯</span>
-          <span class="chip">受潮进水</span>
+          <span class="chip">电缆绝缘击穿</span>
+          <span class="chip">电缆断线断芯</span>
           <span class="chip">外皮破损腐蚀</span>
+          <span class="chip">接地电阻异常</span>
         </div>
       </div>
  
@@ -757,20 +795,17 @@ const products = {
       </div>
  
       <div class="content-block">
-        <div class="content-block-title">系统核心功能</div>
-        <div class="feature-list">
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>用电数据时序分析 + 故障预判模型</strong>，依托 AI 提前精准预警</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>远程联动控制</strong>：异常时自动触发保护动作，降低事故扩散风险</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>分级报警推送</strong>：按严重程度分级推送至相关责任人</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>运维工单生成</strong>：自动派单，优化运维响应流程，减少人工干预</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">大幅减少<strong>非计划停电、电气火灾</strong>等安全事故，削减人工巡检成本</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text">实现配电运维<strong>智能化、无人化</strong>，满足现代化安全用电与精益化管理需求</div></div>
+        <div class="content-block-title">系统核心功能与价值</div>
+        <div class="feature-list green-list">
+          <div class="feature-item"><div class="feature-text"><strong>提前精准预警</strong>：依托用电数据时序分析与故障预判模型，精准识别风险隐患</div></div>
+          <div class="feature-item"><div class="feature-text"><strong>智能联动与工单</strong>：支持远程联动控制、分级报警推送、运维工单自动生成</div></div>
+          <div class="feature-item"><div class="feature-text"><strong>无人化运维</strong>：大幅减少非计划停电、电气火灾等安全事故，优化运维流程，削减人工巡检成本</div></div>
         </div>
       </div>
  
       <div class="content-block">
         <div class="content-block-title">适用行业场景</div>
-        <div class="chip-wrap blue-style">
+        <div class="chip-wrap orange-style">
           <span class="chip-accent">工业企业</span><span class="chip-accent">产业园区</span>
           <span class="chip-accent">市政设施</span><span class="chip-accent">商业综合体</span>
           <span class="chip-accent">医院</span><span class="chip-accent">学校</span>
@@ -782,63 +817,205 @@ const products = {
  
   xiao: {
     label: 'PRODUCT 04 · FIRE PUMP ROOM MONITORING',
-    title: '消防泵房设施完整性智慧监测系统',
-    sub: '聚焦消防设施完整性与待命状态管控，破解消防设施"带病运行、监管缺位"痛点，保障消防系统时刻处于合规备战状态',
+    title: '消防泵房设施完整性监测系统',
+    sub: '破解消防设施“带病运行、监管缺位”痛点，保障系统时刻处于合规备战状态',
     body: `
       <div class="content-intro">
-        本系统以<strong>物联网智能感知、边缘计算、AI 智能分析</strong>为技术核心，实现消防泵房<strong>全生命周期全天候预防性在线监测</strong>，通过多维度数据融合与趋势预判分析，最大限度降低消防设施失效风险，筑牢消防安全底线，同时兼顾<strong>降本增效与消防安全双重目标</strong>。
+        本系统专为<strong>各类工业园区、住宅小区、公共建筑、化工企业</strong>等消防泵房场景研发，以物联网智能感知、边缘计算、AI 智能分析为技术核心，聚焦消防设施完整性与待命状态管控，实现消防泵房<strong>全生命周期全天候预防性在线监测</strong>，最大限度降低消防设施失效风险，筑牢消防安全底线。
       </div>
- 
+
       <div class="content-block">
-        <div class="content-block-title">核心隐患监测</div>
-        <div class="chip-wrap warn-style">
-          <span class="chip">水泵启停异常</span>
-          <span class="chip">主备泵切换失灵</span>
-          <span class="chip">管网压力不稳</span>
-          <span class="chip">液位异常波动</span>
-          <span class="chip">管路泄漏</span>
-          <span class="chip">阀门开关故障</span>
-          <span class="chip">电机过载过热</span>
+        <div class="content-block-title">重点覆盖应用场景</div>
+        <div class="icon-card-grid">
+          <div class="icon-card"><span class="ic">🏭</span><span class="txt">工业园区</span></div>
+          <div class="icon-card"><span class="ic">🏢</span><span class="txt">住宅小区</span></div>
+          <div class="icon-card"><span class="ic">🏬</span><span class="txt">商业综合体</span></div>
+          <div class="icon-card"><span class="ic">🏫</span><span class="txt">各类学校</span></div>
+          <div class="icon-card"><span class="ic">🏥</span><span class="txt">医疗机构</span></div>
+          <div class="icon-card"><span class="ic">⚗️</span><span class="txt">化工企业</span></div>
         </div>
       </div>
  
       <div class="content-block">
-        <div class="content-block-title">易忽视问题全覆盖</div>
-        <div class="chip-wrap warn-style">
-          <span class="chip">管道腐蚀</span>
-          <span class="chip">阀门密封失效</span>
-          <span class="chip">仪表失灵</span>
-          <span class="chip">供电异常</span>
+        <div class="content-block-title">核心隐患与易忽视问题监测</div>
+        <div class="two-col">
+          <div class="sub-block-warn">
+            <div class="sub-block-title">🌊 水系统与管网隐患</div>
+            <ul>
+              <li>管网压力不稳、液位异常波动</li>
+              <li>管路泄漏、管道局部腐蚀</li>
+              <li>阀门开关故障、密封失效</li>
+            </ul>
+          </div>
+          <div class="sub-block-warn">
+            <div class="sub-block-title">⚡ 机电设备与控制隐患</div>
+            <ul>
+              <li>水泵启停异常、主备泵切换失灵</li>
+              <li>水泵电机过载过热</li>
+              <li>控制仪表失灵、供电异常</li>
+            </ul>
+          </div>
         </div>
       </div>
  
       <div class="content-block">
         <div class="content-block-title">系统核心功能</div>
-        <div class="feature-list">
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>多维度数据融合 + 趋势预判分析</strong>：提前精准预警，争取处置时间</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>报警联动</strong>：异常状态自动触发联动响应，防止事态扩大</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>状态可视化</strong>：泵房所有设备运行状态实时大屏展示，一目了然</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>台账管理</strong>：设施档案、维保记录、巡检日志全面数字化</div></div>
-          <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>合规自查</strong>：自动比对消防法规要求，生成合规检查报告，减轻监管压力</div></div>
+        <div class="numbered-grid">
+          <div class="numbered-card">
+            <div class="num-badge">1</div>
+            <div class="num-content">
+              <div class="num-title">多维度趋势预判</div>
+              <div class="num-desc">通过多维度数据融合与趋势预判分析，提前精准预警系统失效风险。</div>
+            </div>
+          </div>
+          <div class="numbered-card">
+            <div class="num-badge">2</div>
+            <div class="num-content">
+              <div class="num-title">状态可视化与联动</div>
+              <div class="num-desc">支持异常报警联动，泵房设备运行状态实时大屏一目了然。</div>
+            </div>
+          </div>
+          <div class="numbered-card">
+            <div class="num-badge">3</div>
+            <div class="num-content">
+              <div class="num-title">智能化台账管理</div>
+              <div class="num-desc">设施档案、维保记录、巡检日志全面数字化闭环管理。</div>
+            </div>
+          </div>
+          <div class="numbered-card">
+            <div class="num-badge">4</div>
+            <div class="num-content">
+              <div class="num-title">一键合规自查</div>
+              <div class="num-desc">自动比对消防法规要求生成合规检查报告，有效减轻监管压力。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <div class="content-block-title">核心业务价值</div>
+        <div class="value-card-grid">
+           <div class="value-card">
+              <span class="value-card-icon">🛡️</span>
+              <div class="value-card-title">消除隐患</div>
+              <div class="value-card-desc">破解设备“带病运行”痛点</div>
+           </div>
+           <div class="value-card">
+              <span class="value-card-icon">✅</span>
+              <div class="value-card-title">合规备战</div>
+              <div class="value-card-desc">保障系统时刻处于备战状态</div>
+           </div>
+           <div class="value-card">
+              <span class="value-card-icon">📉</span>
+              <div class="value-card-title">降本增效</div>
+              <div class="value-card-desc">兼顾常态化管控与运维降本</div>
+           </div>
         </div>
       </div>
  
       <div class="content-block">
-        <div class="content-block-title">适用场景</div>
-        <div class="chip-wrap blue-style">
-          <span class="chip-accent">工业园区</span><span class="chip-accent">住宅小区</span>
-          <span class="chip-accent">商业综合体</span><span class="chip-accent">学校</span>
-          <span class="chip-accent">医院</span><span class="chip-accent">化工企业</span>
-          <span class="chip-accent">各类公共建筑</span>
+        <p class="note" style="border-left-color: #dd6b20; background: #fffaf0;">
+          <strong style="color: #dd6b20;">系统适配：</strong>适配不同规模、不同布局的消防泵房设施，满足智能化监测、常态化管控、合规化运维的全场景需求，兼顾降本增效与消防安全双重目标。
+        </p>
+      </div>
+    `
+  },
+
+  nengyuan: {
+    label: 'PRODUCT 05 · SMART ENERGY MANAGEMENT',
+    title: '智慧能源管理与节能优化系统',
+    sub: '适用场景：空压系统、冷却水系统、余热回收、水泵、锅炉、空调、照明等多能耦合场景',
+    body: `
+      <div class="content-intro">
+        本系统专为工业制造领域的<strong>空压系统、冷却水系统、余热回收及多能耦合</strong>场景研发，以物联网云平台、边缘计算、智能分析与定制化节能装备为核心，构建覆盖“产—输—用”全链条的智慧能源管理体系，实现能源数据实时在线、设备联动控制、能效诊断分析与动态优化调度。
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">多能互补系统节能服务矩阵</div>
+        <div class="icon-card-grid">
+          <div class="icon-card"><span class="ic">☁️</span><span class="txt">压缩空气系统节能</span></div>
+          <div class="icon-card"><span class="ic">🌡️</span><span class="txt">余热回收节能</span></div>
+          <div class="icon-card"><span class="ic">❄️</span><span class="txt">空调节能</span></div>
+          <div class="icon-card"><span class="ic">🔥</span><span class="txt">锅炉节能</span></div>
+          <div class="icon-card"><span class="ic">💧</span><span class="txt">水泵节能</span></div>
+          <div class="icon-card"><span class="ic">🌊</span><span class="txt">冷却水系统节能</span></div>
         </div>
-        <p class="note">★ 适配不同规模、不同布局的消防泵房设施，满足常态化管控与合规化运维全场景需求</p>
+        <div class="chip-wrap green-list" style="margin-top: 16px; justify-content: center;">
+           <span class="chip-accent">照明节能</span>
+           <span class="chip-accent">物联网云智控平台</span>
+           <span class="chip-accent">数字孪生能效管理</span>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">聚焦解决典型问题</div>
+        <div class="chip-wrap warn-style">
+          <span class="chip">供气波动大</span>
+          <span class="chip">能耗偏高</span>
+          <span class="chip">群控失效</span>
+          <span class="chip">干燥净化压降高</span>
+          <span class="chip">站房环境不佳</span>
+          <span class="chip">能源管理粗放</span>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <div class="content-block-title">物联网云平台 · 六大核心功能</div>
+        <div class="numbered-grid">
+          <div class="numbered-card">
+            <div class="num-badge">1</div>
+            <div class="num-content">
+              <div class="num-title">设备物联网化</div>
+              <div class="num-desc">精细动态管理，实现安全、高效、节能一体化</div>
+            </div>
+          </div>
+          <div class="numbered-card">
+            <div class="num-badge">2</div>
+            <div class="num-content">
+              <div class="num-title">智能数据分析</div>
+              <div class="num-desc">横纵向数据统计，规划更节能使用方案</div>
+            </div>
+          </div>
+          <div class="numbered-card">
+            <div class="num-badge">3</div>
+            <div class="num-content">
+              <div class="num-title">实时在线监控</div>
+              <div class="num-desc">PC / 手机随时随地掌握设备运行状态</div>
+            </div>
+          </div>
+          <div class="numbered-card">
+            <div class="num-badge">4</div>
+            <div class="num-content">
+              <div class="num-title">远程故障预测</div>
+              <div class="num-desc">大数据比对标准参数，预测危险点即时提醒</div>
+            </div>
+          </div>
+          <div class="numbered-card">
+            <div class="num-badge">5</div>
+            <div class="num-content">
+              <div class="num-title">多台远程联控</div>
+              <div class="num-desc">云平台联动控制多台设备及辅机</div>
+            </div>
+          </div>
+          <div class="numbered-card">
+            <div class="num-badge">6</div>
+            <div class="num-content">
+              <div class="num-title">远程视频监控</div>
+              <div class="num-desc">实时查看现场画面，自动录像保障安全</div>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="content-block">
+        <p class="note" style="border-left-color: #dd6b20; background: #fffaf0;">
+          <strong style="color: #dd6b20;">适用行业：</strong>建材玻璃、汽车制造、钢铁冶炼、电子半导体、石油化工、食品医药、造纸印刷等行业。<br>兼顾节能改造、智能监控、运维托管与方案集成交付需求，助力企业实现安全、节能、高效、低碳运行。
+        </p>
       </div>
     `
   }
 };
  
-// --- 交互逻辑 ---
-
 function openModal(key) {
   const p = products[key];
   document.getElementById('modalLabel').textContent = p.label;
@@ -861,8 +1038,6 @@ function handleOverlayClick(e) {
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-// --- 高级视效与交互逻辑 ---
 
 document.addEventListener('DOMContentLoaded', () => {
   const counters = document.querySelectorAll('.counter-num');
@@ -918,14 +1093,6 @@ document.addEventListener('DOMContentLoaded', () => {
       card.style.transform = `translateZ(0) rotateX(0deg) rotateY(0deg)`;
       card.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
       setTimeout(() => card.style.transition = '', 600);
-    });
-
-    document.querySelectorAll('.product-card').forEach(pc => {
-      pc.addEventListener('mousemove', e => {
-        const rect = pc.getBoundingClientRect();
-        pc.style.setProperty('--mx', `${e.clientX - rect.left}px`);
-        pc.style.setProperty('--my', `${e.clientY - rect.top}px`);
-      });
     });
   }
 });
