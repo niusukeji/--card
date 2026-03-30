@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* 主页背景渐变 - 升级为更明显的清透蓝 */
+    /* 主页背景渐变 */
     --bg-gradient: linear-gradient(135deg, #dbeafe 0%, #9fc4f8 100%);
     --grid-line: rgba(26, 115, 232, 0.08);
     
@@ -219,7 +219,7 @@
   .est-bar { width:50px;height:2px;background:linear-gradient(90deg,transparent,var(--c-blue)); }
   .est-text { font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:var(--text-muted);letter-spacing:.25em; text-transform: uppercase;}
  
-  /* ── 弹窗 MODAL ── */
+  /* ── 弹窗 MODAL (更加明显且护眼的浅蓝背景) ── */
   .modal-overlay {
     position:fixed;inset:0;z-index:200; display:flex;align-items:center;justify-content:center;
     background:rgba(15, 23, 42, 0.6); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
@@ -227,16 +227,22 @@
     padding: 20px; transform: translateZ(0);
   }
   .modal-overlay.active { opacity:1;pointer-events:all; }
+  
   .modal {
     position:relative; width:100%; max-width:680px; max-height:88vh; 
-    background: #eef4fa; border: none; border-radius: 12px;
+    background: #e3f0fb; /* 增强背景蓝色的明显度 */
+    border: none; border-radius: 12px;
     overflow:hidden;display:flex;flex-direction:column; box-shadow: 0 30px 60px rgba(0,0,0,0.15);
     transform:translateY(40px) scale(0.96) translateZ(0); 
     transition:transform .5s cubic-bezier(0.2, 0.8, 0.2, 1); will-change: transform;
   }
   .modal-overlay.active .modal { transform:none; }
   
-  .modal-header { padding:34px 36px 26px; border-bottom:none;flex-shrink:0;position:relative; background: linear-gradient(135deg, #0052cc 0%, #1a73e8 100%); color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.08); z-index: 10; }
+  .modal-header { 
+    padding:34px 36px 26px; border-bottom:none;flex-shrink:0;position:relative; 
+    background: linear-gradient(135deg, #0052cc 0%, #1a73e8 100%); color: #fff; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08); z-index: 10;
+  }
   .modal-label { font-family:'Share Tech Mono',monospace;font-size:11px;color:rgba(255,255,255,0.8);letter-spacing:.35em;text-transform:uppercase;margin-bottom:14px; padding-right: 45px;}
   .modal-title { font-size:25px;font-weight:700;color:#fff;letter-spacing:.08em;line-height:1.4; padding-right: 45px; }
   .modal-sub { font-size:13.5px;color:rgba(255,255,255,0.9);margin-top:10px;letter-spacing:.08em;line-height:1.7;}
@@ -251,11 +257,12 @@
   .modal-body { 
     overflow-y:auto;flex:1;padding:34px 36px 45px; -webkit-overflow-scrolling: touch; 
     scrollbar-width:thin;scrollbar-color:var(--c-blue) transparent; 
-    background: linear-gradient(180deg, #f4f8fc 0%, #e8f0f8 100%);
+    /* 更加明显的天空蓝护眼渐变 */
+    background: linear-gradient(180deg, #e6f2fd 0%, #d4e8f9 100%);
   }
   .modal-body::-webkit-scrollbar { width:6px; }
   .modal-body::-webkit-scrollbar-track { background: transparent; }
-  .modal-body::-webkit-scrollbar-thumb { background:#cbd5e1;border-radius:3px; }
+  .modal-body::-webkit-scrollbar-thumb { background:#a8cbf0;border-radius:3px; }
  
   @keyframes blockFadeIn {
     from { opacity: 0; transform: translateY(20px); }
@@ -270,6 +277,7 @@
   .modal-overlay.active .content-block:nth-child(4) { animation-delay: 0.25s; }
   .modal-overlay.active .content-block:nth-child(5) { animation-delay: 0.3s; }
 
+  /* 悬浮在蓝底之上的纯白内容卡片 */
   .content-intro {
     font-size:14.5px;color:var(--modal-text-sub);line-height:2.1;letter-spacing:.08em;
     margin-bottom:36px;padding:24px 28px; background: #ffffff;
@@ -381,24 +389,18 @@
 
   @media (max-width: 480px) {
     body { padding: 15px 10px; }
-    
     .card-header { padding: 24px 60px 24px 20px; } 
     .logo-mark { top: 24px; right: 15px; transform: scale(0.85); transform-origin: top right; } 
-    
     .header-badge { padding: 4px 8px; margin-bottom: 12px; }
     .badge-text { font-size: 8.5px; letter-spacing: 0.1em; } 
-    
     .company-name-cn { font-size: 20px; line-height: 1.3; }
     .company-name-en { font-size: 9px; margin-top: 6px; letter-spacing: 0.15em; line-height: 1.3;}
-    
     .tagline { padding: 14px 16px; margin-top: 18px; }
     .tagline-text { font-size: 12px; line-height: 1.7; }
     .profile-btn { margin-top: 12px; padding: 8px 18px; font-size: 12px; }
-    
     .stat-item { padding: 16px 6px; }
     .stat-value { font-size: 24px; }
     .stat-label { font-size: 10px; letter-spacing: 0.1em; }
-    
     .section, .industries-section, .values-section { padding: 24px 18px; }
     .products-grid { gap: 10px; }
     .product-card { padding: 16px 14px; }
@@ -407,33 +409,27 @@
     .product-sub { font-size: 10px; margin-top: 6px; }
     .contact-grid { grid-template-columns: 1fr; gap: 12px; } 
     .card-footer { padding: 20px 18px; flex-direction: column; gap: 8px; align-items: flex-start; }
-    
     .modal-overlay { padding: 12px; }
     .modal-header { padding: 24px 20px 20px; }
     .modal-label { font-size: 9px; letter-spacing: 0.15em; padding-right: 48px; line-height: 1.4; margin-bottom: 10px; } 
     .modal-title { font-size: 19px; padding-right: 48px; } 
     .modal-sub { font-size: 12px; margin-top: 8px; padding-right: 40px; }
     .modal-close { top: 20px; right: 16px; width: 32px; height: 32px; font-size: 16px; }
-    
     .modal-body { padding: 20px 18px 30px; }
     .content-intro { padding: 16px 18px; font-size: 13.5px; margin-bottom: 24px; }
     .content-block { margin-bottom: 24px; }
     .content-block-title { font-size: 14px; margin-bottom: 16px; padding: 8px 12px; }
-    
     .flow-container { gap: 4px; margin: 16px 0; flex-wrap: nowrap; } 
     .flow-step { padding: 6px 10px; font-size: 12px; letter-spacing: 0; }
     .flow-arrow { font-size: 12px; margin: 0 1px; }
-    
     .feature-item { padding: 14px 16px; gap: 12px; }
     .feature-text { font-size: 13.5px; line-height: 1.7; }
     .chip-wrap { gap: 8px; }
     .chip, .orange-style .chip, .orange-style .chip-accent, .green-list .chip-accent { font-size: 11.5px; padding: 6px 12px; }
-    
     .value-card-grid { grid-template-columns: 1fr; gap: 12px; }
     .two-col { grid-template-columns: 1fr; gap: 14px; }
     .sub-block-warn { padding: 16px; }
     .sub-block-warn .sub-block-title { font-size: 14.5px; margin-bottom: 12px; padding-bottom: 10px; }
-    
     .icon-card { padding: 16px 10px; gap: 8px; }
     .icon-card .ic { font-size: 24px; }
     .icon-card .txt { font-size: 12px; }
