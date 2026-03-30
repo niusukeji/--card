@@ -7,26 +7,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* 日间护眼模式核心色彩 */
     --bg-gradient: linear-gradient(135deg, #eef2f6 0%, #e0eafc 100%);
     --grid-line: rgba(26, 115, 232, 0.06);
-    
-    /* 玻璃拟物化 (纯白) */
     --glass-bg: rgba(255, 255, 255, 0.85);
     --glass-border: rgba(255, 255, 255, 1);
     
-    /* 护眼高对比度文字 */
     --text-primary: #0f172a; 
     --text-secondary: #475569; 
     --text-muted: #64748b; 
     
-    /* 弹窗白底黑字主题保持一致 */
     --modal-bg: #ffffff;
     --modal-text: #0f172a;
     --modal-text-sub: #475569;
     --modal-border: #e2e8f0;
 
-    /* 企业科技蓝点缀 */
     --c-blue: #1a73e8;
     --c-blue-light: #eff6ff;
     --c-red: #e53e3e;
@@ -81,9 +75,7 @@
   @keyframes floatOrb1 { to{ transform:translate(60px,80px) translateZ(0); } }
   @keyframes floatOrb2 { to{ transform:translate(-50px,-60px) translateZ(0); } }
  
-  .card-perspective {
-    width: 100%; max-width: 520px; margin: auto 0; perspective: 1200px; 
-  }
+  .card-perspective { width: 100%; max-width: 520px; margin: auto 0; perspective: 1200px; }
   .card {
     position:relative; width: 100%; height: 100%;
     background: var(--glass-bg);
@@ -110,13 +102,11 @@
   .corner-tl{top:0;left:0} .corner-tr{top:0;right:0;transform:scaleX(-1)} .corner-bl{bottom:0;left:0;transform:scaleY(-1)} .corner-br{bottom:0;right:0;transform:scale(-1)}
  
   .card-header { padding:38px 85px 32px 30px; border-bottom:1px solid var(--modal-border); position:relative; background: radial-gradient(circle at 85% 0%, var(--c-blue-light), transparent); }
-  @media (min-width: 480px) { .card-header { padding:42px 95px 36px 36px; } }
   
   .header-badge { display:inline-flex;align-items:center;gap:8px; background:var(--c-blue-light);border:1px solid rgba(26,115,232,0.2);border-radius:4px;padding:6px 14px;margin-bottom:20px; }
   .badge-dot { width:6px;height:6px;border-radius:50%;background:var(--c-blue); animation:pulse 2s ease-in-out infinite; will-change: transform, opacity; }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
-  .badge-text { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--c-blue);letter-spacing:.2em;text-transform:uppercase; font-weight: 700; }
-  @media (min-width: 380px) { .badge-text { font-size: 12px; letter-spacing:.25em; } }
+  .badge-text { font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--c-blue);letter-spacing:.25em;text-transform:uppercase; font-weight: 700; }
   
   .logo-mark { position:absolute;top:34px;right:28px; animation:spinLogo 30s linear infinite; will-change: transform; transform: translateZ(0); }
   @keyframes spinLogo { 100% { transform: rotate(360deg) translateZ(0); } }
@@ -129,11 +119,8 @@
   .data-stream-line:nth-child(1){width:45px;animation-delay:0s} .data-stream-line:nth-child(2){width:28px;animation-delay:.3s} .data-stream-line:nth-child(3){width:38px;animation-delay:.6s}
   @keyframes streamIn { 0%,100%{opacity:.1;transform:scaleX(.4) translateZ(0); transform-origin: right;} 50%{opacity:1;transform:scaleX(1) translateZ(0); transform-origin: right;} }
   
-  .company-name-cn { 
-    font-size:25px;font-weight:700;letter-spacing:.1em; color: var(--text-primary);
-  }
-  .company-name-en { font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:600;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-top:10px;}
-  @media (min-width: 380px) { .company-name-cn { font-size:28px; } .company-name-en { font-size:12px; } }
+  .company-name-cn { font-size:28px;font-weight:700;letter-spacing:.1em; color: var(--text-primary); }
+  .company-name-en { font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-top:10px;}
 
   .tagline { margin-top:24px;padding:18px 22px;background: #f8fafc; border-left:3px solid var(--c-blue);border-radius:0 8px 8px 0; cursor:pointer; transition:all .3s ease; position: relative; overflow: hidden; transform: translateZ(0); }
   .tagline:hover { background: var(--c-blue-light); transform: translateX(4px) translateZ(0); box-shadow: 0 4px 12px rgba(26,115,232,0.05); }
@@ -292,13 +279,11 @@
   .content-block-title::after { content:'';flex:1;height:1px;background:linear-gradient(90deg, var(--modal-border), transparent); }
  
   /* --- 高级排版组件 --- */
-  /* 流程图组件 */
   .flow-container { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 20px 0; flex-wrap: wrap; }
-  .flow-step { background: var(--c-blue); color: #fff; padding: 8px 22px; border-radius: 6px; font-weight: 600; font-size: 14.5px; box-shadow: 0 4px 10px rgba(26,115,232,0.2); letter-spacing: 0.1em; transition: transform 0.3s; }
+  .flow-step { white-space: nowrap; background: var(--c-blue); color: #fff; padding: 8px 22px; border-radius: 6px; font-weight: 600; font-size: 14.5px; box-shadow: 0 4px 10px rgba(26,115,232,0.2); letter-spacing: 0.1em; transition: transform 0.3s; }
   .flow-step:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(26,115,232,0.3); }
   .flow-arrow { color: var(--c-blue); font-weight: bold; font-size: 18px; }
 
-  /* 标签体系 */
   .chip-wrap { display:flex;flex-wrap:wrap;gap:12px; }
   .chip { 
     font-size:13.5px;color:var(--modal-text-sub);background:#fff; 
@@ -324,7 +309,6 @@
   }
   .green-list .chip-accent:hover { background:#d1fae5; border-color: #6ee7b7; color: #047857; transform: translateY(-2px); }
 
-  /* 列表卡片组件 */
   .blue-list .feature-item { border-left-color: var(--c-blue); }
   .blue-list .feature-item:hover { background: #eff6ff; border-color: #bfdbfe; border-left-color: var(--c-blue); }
   .blue-list .feature-text strong { color: var(--c-blue); }
@@ -344,18 +328,14 @@
   .feature-text { font-size:14.5px;color:var(--modal-text-sub);line-height:1.9;letter-spacing:.06em; }
   .feature-text strong { color:var(--modal-text);font-weight:700; }
  
-  /* 价值卡片三列网格 */
   .value-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px;}
-  @media (max-width: 500px) { .value-card-grid { grid-template-columns: 1fr; } }
   .value-card { background: #f8fafc; border: 1px solid var(--modal-border); border-radius: 8px; padding: 22px 14px; text-align: center; transition: all 0.3s; box-shadow: 0 2px 6px rgba(0,0,0,0.02);}
   .value-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(26,115,232,0.08); border-color: var(--c-blue); }
   .value-card-icon { font-size: 32px; margin-bottom: 12px; display: block; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
   .value-card-title { font-size: 15px; font-weight: 700; color: var(--modal-text); margin-bottom: 8px; letter-spacing: 0.05em;}
   .value-card-desc { font-size: 12.5px; color: var(--modal-text-sub); line-height: 1.6;}
 
-  /* 警告面板双列网格 */
   .two-col { display:grid;grid-template-columns:1fr 1fr;gap:18px; }
-  @media (max-width: 450px) { .two-col { grid-template-columns: 1fr; } }
   .sub-block-warn { 
     padding:22px; background: #fff; border: 1px solid var(--modal-border);
     border-top: 4px solid var(--c-red); border-radius:8px; transition: all 0.3s;
@@ -369,7 +349,6 @@
   .sub-block-warn ul li { font-size:13.5px;color:var(--modal-text-sub);letter-spacing:.06em;line-height:2.1;padding-left:20px;position:relative; margin-bottom: 8px;}
   .sub-block-warn ul li::before { content:'■';position:absolute;left:0;color:var(--c-red); font-size: 10px; top: 2px;}
 
-  /* 图标宫格矩阵 */
   .icon-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   @media (min-width: 480px) { .icon-card-grid { grid-template-columns: repeat(3, 1fr); } }
   .icon-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 20px 12px; background: #fff; border: 1px solid var(--modal-border); border-radius: 8px; transition: all 0.3s; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.02);}
@@ -377,7 +356,6 @@
   .icon-card .ic { font-size: 28px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
   .icon-card .txt { font-size: 13.5px; font-weight: 600; color: var(--modal-text); letter-spacing: 0.05em; line-height: 1.4; }
 
-  /* 序号核心卡片 */
   .numbered-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
   @media (min-width: 480px) { .numbered-grid { grid-template-columns: 1fr 1fr; } }
   .numbered-card { display: flex; align-items: flex-start; gap: 16px; padding: 22px; background: #fff; border: 1px solid var(--modal-border); border-radius: 8px; transition: all 0.3s; box-shadow: 0 2px 6px rgba(0,0,0,0.02);}
@@ -390,55 +368,66 @@
   .note { margin-top:20px;font-size:13.5px;color:#718096;letter-spacing:.08em;font-style:italic; border-left: 3px solid #cbd5e1; padding-left: 14px; background: #f8fafc; padding: 12px 16px; border-radius: 4px;}
 
   /* =========================================================
-     移动端专属优化 (Mobile Optimization) 
-     针对手机端小屏幕收缩间距、调整字号，确保绝不折行与拥挤
+     移动端专属完美适配 (Mobile Optimization) 
+     修复文字重叠、防止换行错位，收缩多余留白
      ========================================================= */
   @media (max-width: 480px) {
     body { padding: 15px 10px; }
     
-    /* 1. 主页卡片调整 */
-    .card-header { padding: 28px 20px 24px 20px; }
-    .company-name-cn { font-size: 21px; }
-    .company-name-en { font-size: 9px; margin-top: 6px; }
-    .tagline { padding: 14px 16px; }
-    .tagline-text { font-size: 12.5px; }
-    .stat-item { padding: 16px 8px; }
-    .stat-value { font-size: 26px; }
-    .section, .industries-section, .values-section { padding: 24px 20px; }
-    .products-grid { gap: 12px; }
-    .product-card { padding: 16px 14px; }
-    .product-icon { font-size: 24px; }
-    .product-name { font-size: 14px; }
-    .product-sub { font-size: 10.5px; }
-    .contact-grid { grid-template-columns: 1fr; gap: 12px; } 
-    .card-footer { padding: 20px; flex-direction: column; gap: 12px; align-items: flex-start; }
+    /* 1. 主页卡片调整 - 右侧增加安全距离，缩小 Logo 防重叠 */
+    .card-header { padding: 24px 60px 24px 20px; } 
+    .logo-mark { top: 24px; right: 15px; transform: scale(0.85); transform-origin: top right; } 
     
-    /* 2. 弹窗(Modal) 头部防折行优化 */
+    .header-badge { padding: 4px 8px; margin-bottom: 12px; }
+    .badge-text { font-size: 8.5px; letter-spacing: 0.1em; } 
+    
+    .company-name-cn { font-size: 20px; line-height: 1.3; }
+    .company-name-en { font-size: 9px; margin-top: 6px; letter-spacing: 0.15em; line-height: 1.3;}
+    
+    .tagline { padding: 14px 16px; margin-top: 18px; }
+    .tagline-text { font-size: 12px; line-height: 1.7; }
+    .profile-btn { margin-top: 12px; padding: 8px 18px; font-size: 12px; }
+    
+    .stat-item { padding: 16px 6px; }
+    .stat-value { font-size: 24px; }
+    .stat-label { font-size: 10px; letter-spacing: 0.1em; }
+    
+    .section, .industries-section, .values-section { padding: 24px 18px; }
+    .products-grid { gap: 10px; }
+    .product-card { padding: 16px 14px; }
+    .product-icon { font-size: 24px; margin-bottom: 10px; }
+    .product-name { font-size: 13px; letter-spacing: 0.05em; }
+    .product-sub { font-size: 10px; margin-top: 6px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 12px; } 
+    .card-footer { padding: 20px 18px; flex-direction: column; gap: 8px; align-items: flex-start; }
+    
+    /* 2. 弹窗(Modal) 头部防折行优化 - 防止挤压文字导致换行 */
     .modal-overlay { padding: 12px; }
     .modal-header { padding: 24px 20px 20px; }
-    .modal-label { font-size: 9px; letter-spacing: 0.15em; padding-right: 36px; line-height: 1.4; margin-bottom: 10px; }
-    .modal-title { font-size: 20px; padding-right: 36px; }
-    .modal-sub { font-size: 12.5px; margin-top: 8px; }
-    .modal-close { top: 20px; right: 20px; width: 32px; height: 32px; font-size: 16px; }
+    .modal-label { font-size: 9px; letter-spacing: 0.15em; padding-right: 48px; line-height: 1.4; margin-bottom: 10px; } 
+    .modal-title { font-size: 19px; padding-right: 48px; } 
+    .modal-sub { font-size: 12px; margin-top: 8px; padding-right: 40px; }
+    .modal-close { top: 20px; right: 16px; width: 32px; height: 32px; font-size: 16px; }
     
     /* 3. 弹窗(Modal) 内容区留白优化 */
-    .modal-body { padding: 20px 20px 30px; }
-    .content-intro { padding: 16px 20px; font-size: 13.5px; margin-bottom: 24px; }
+    .modal-body { padding: 20px 18px 30px; }
+    .content-intro { padding: 16px 18px; font-size: 13.5px; margin-bottom: 24px; }
     .content-block { margin-bottom: 24px; }
     .content-block-title { font-size: 14px; margin-bottom: 16px; padding: 8px 12px; }
     
     /* 4. 流程图组件防错位换行 */
-    .flow-container { gap: 6px; margin: 16px 0; }
-    .flow-step { padding: 6px 12px; font-size: 12.5px; letter-spacing: 0; }
-    .flow-arrow { font-size: 14px; margin: 0 2px; }
+    .flow-container { gap: 4px; margin: 16px 0; flex-wrap: nowrap; } 
+    .flow-step { padding: 6px 10px; font-size: 12px; letter-spacing: 0; }
+    .flow-arrow { font-size: 12px; margin: 0 1px; }
     
     /* 5. 列表组件优化 */
     .feature-item { padding: 14px 16px; gap: 12px; }
-    .feature-text { font-size: 13.5px; line-height: 1.8; }
+    .feature-text { font-size: 13.5px; line-height: 1.7; }
     .chip-wrap { gap: 8px; }
-    .chip, .orange-style .chip, .orange-style .chip-accent, .green-list .chip-accent { font-size: 12px; padding: 6px 12px; }
+    .chip, .orange-style .chip, .orange-style .chip-accent, .green-list .chip-accent { font-size: 11.5px; padding: 6px 12px; }
     
-    /* 6. 高危预警双列改单列 */
+    /* 6. 价值组件与高危预警双列改单列 */
+    .value-card-grid { grid-template-columns: 1fr; gap: 12px; }
     .two-col { grid-template-columns: 1fr; gap: 14px; }
     .sub-block-warn { padding: 16px; }
     .sub-block-warn .sub-block-title { font-size: 14.5px; margin-bottom: 12px; padding-bottom: 10px; }
@@ -446,7 +435,7 @@
     /* 7. 图标宫格与序号卡片 */
     .icon-card { padding: 16px 10px; gap: 8px; }
     .icon-card .ic { font-size: 24px; }
-    .icon-card .txt { font-size: 12.5px; }
+    .icon-card .txt { font-size: 12px; }
     .numbered-card { padding: 18px 16px; flex-direction: column; gap: 12px; }
   }
 </style>
