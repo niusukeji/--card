@@ -388,6 +388,67 @@
   .num-desc { font-size: 13px; color: var(--modal-text-sub); line-height: 1.7; letter-spacing: 0.04em;}
  
   .note { margin-top:20px;font-size:13.5px;color:#718096;letter-spacing:.08em;font-style:italic; border-left: 3px solid #cbd5e1; padding-left: 14px; background: #f8fafc; padding: 12px 16px; border-radius: 4px;}
+
+  /* =========================================================
+     移动端专属优化 (Mobile Optimization) 
+     针对手机端小屏幕收缩间距、调整字号，确保绝不折行与拥挤
+     ========================================================= */
+  @media (max-width: 480px) {
+    body { padding: 15px 10px; }
+    
+    /* 1. 主页卡片调整 */
+    .card-header { padding: 28px 20px 24px 20px; }
+    .company-name-cn { font-size: 21px; }
+    .company-name-en { font-size: 9px; margin-top: 6px; }
+    .tagline { padding: 14px 16px; }
+    .tagline-text { font-size: 12.5px; }
+    .stat-item { padding: 16px 8px; }
+    .stat-value { font-size: 26px; }
+    .section, .industries-section, .values-section { padding: 24px 20px; }
+    .products-grid { gap: 12px; }
+    .product-card { padding: 16px 14px; }
+    .product-icon { font-size: 24px; }
+    .product-name { font-size: 14px; }
+    .product-sub { font-size: 10.5px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 12px; } 
+    .card-footer { padding: 20px; flex-direction: column; gap: 12px; align-items: flex-start; }
+    
+    /* 2. 弹窗(Modal) 头部防折行优化 */
+    .modal-overlay { padding: 12px; }
+    .modal-header { padding: 24px 20px 20px; }
+    .modal-label { font-size: 9px; letter-spacing: 0.15em; padding-right: 36px; line-height: 1.4; margin-bottom: 10px; }
+    .modal-title { font-size: 20px; padding-right: 36px; }
+    .modal-sub { font-size: 12.5px; margin-top: 8px; }
+    .modal-close { top: 20px; right: 20px; width: 32px; height: 32px; font-size: 16px; }
+    
+    /* 3. 弹窗(Modal) 内容区留白优化 */
+    .modal-body { padding: 20px 20px 30px; }
+    .content-intro { padding: 16px 20px; font-size: 13.5px; margin-bottom: 24px; }
+    .content-block { margin-bottom: 24px; }
+    .content-block-title { font-size: 14px; margin-bottom: 16px; padding: 8px 12px; }
+    
+    /* 4. 流程图组件防错位换行 */
+    .flow-container { gap: 6px; margin: 16px 0; }
+    .flow-step { padding: 6px 12px; font-size: 12.5px; letter-spacing: 0; }
+    .flow-arrow { font-size: 14px; margin: 0 2px; }
+    
+    /* 5. 列表组件优化 */
+    .feature-item { padding: 14px 16px; gap: 12px; }
+    .feature-text { font-size: 13.5px; line-height: 1.8; }
+    .chip-wrap { gap: 8px; }
+    .chip, .orange-style .chip, .orange-style .chip-accent, .green-list .chip-accent { font-size: 12px; padding: 6px 12px; }
+    
+    /* 6. 高危预警双列改单列 */
+    .two-col { grid-template-columns: 1fr; gap: 14px; }
+    .sub-block-warn { padding: 16px; }
+    .sub-block-warn .sub-block-title { font-size: 14.5px; margin-bottom: 12px; padding-bottom: 10px; }
+    
+    /* 7. 图标宫格与序号卡片 */
+    .icon-card { padding: 16px 10px; gap: 8px; }
+    .icon-card .ic { font-size: 24px; }
+    .icon-card .txt { font-size: 12.5px; }
+    .numbered-card { padding: 18px 16px; flex-direction: column; gap: 12px; }
+  }
 </style>
 </head>
 <body>
